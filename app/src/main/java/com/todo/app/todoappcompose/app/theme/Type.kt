@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.ui.theme
+package com.todo.app.todoappcompose.app.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
