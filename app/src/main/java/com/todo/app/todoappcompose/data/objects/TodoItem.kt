@@ -1,13 +1,11 @@
 package com.todo.app.todoappcompose.data.objects
 
-import java.util.Date
 
 data class TodoItem(
     val id: String,
     val text: String,
-    val importance: TodoImportance,
-    val deadline: String? = null,
-    val isDone: Boolean,
-    val creationDate: Date,
-    val modificationDate: Date? = null
+    val importance: TodoImportance = TodoImportance.NORMAL,
+    val deadline: TaskDate? = null,
+    val isDone: Boolean = false,
+    val creationDate: TaskDate,
 )
