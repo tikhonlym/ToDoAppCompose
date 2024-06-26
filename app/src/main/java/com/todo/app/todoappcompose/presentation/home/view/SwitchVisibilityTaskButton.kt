@@ -16,6 +16,7 @@ fun SwitchVisibilityTaskButton(
     modifier: Modifier = Modifier,
     checked: Boolean,
 ) {
+
     Crossfade(
         targetState = checked,
         animationSpec = tween(450)

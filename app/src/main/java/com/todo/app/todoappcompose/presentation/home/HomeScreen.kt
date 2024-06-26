@@ -33,10 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.presentation.edit.EditScreenDestination
 import com.todo.app.todoappcompose.presentation.home.view.CreateNewTaskBtn
 import com.todo.app.todoappcompose.presentation.home.view.ItemTodoListView
 import com.todo.app.todoappcompose.presentation.home.view.NewTaskFloatingButton
@@ -49,7 +47,7 @@ object HomeScreenDestination
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    onNavigateToEditScreen: (String?) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     Box(
@@ -57,10 +55,10 @@ fun HomeScreen(
             .fillMaxSize()
             .background(AppTheme.colorScheme.backPrimary)
     ) {
-        HomeScreenComponent(navController, viewModel)
+        HomeScreenComponent(onNavigateToEditScreen, viewModel)
         NewTaskFloatingButton(
-            onClick = {
-                navController.navigate(EditScreenDestination(id = null))
+            onNewTask = {
+                onNavigateToEditScreen(null)
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -71,7 +69,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeScreenComponent(
-    navController: NavController,
+    onNavigateToEditScreen: (String?) -> Unit,
     viewModel: HomeViewModel,
 ) {
     val listState = rememberLazyListState()
@@ -90,6 +88,7 @@ private fun HomeScreenComponent(
     val todoList = viewModel.todoList.collectAsState()
     val showCompleted = viewModel.showCompletedTasks.collectAsState()
     val countCompletedTasks = viewModel.countCompleted.collectAsState()
+    var onTaskClickEnabled by remember { mutableStateOf(true) }
     CollapsedTopBar(
         modifier = Modifier.zIndex(2f),
         isCollapsed = isCollapsed
@@ -113,9 +112,11 @@ private fun HomeScreenComponent(
                     viewModel.completeTask(id, isDone)
                 },
                 onItemClicked = { id ->
-                    navController.navigate(EditScreenDestination(id = id))
+                    onNavigateToEditScreen(id)
+                    onTaskClickEnabled = false
                 },
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                enabled = onTaskClickEnabled,
                 showCompletedTasks = showCompleted.value,
                 data = curItem,
             )
@@ -124,7 +125,7 @@ private fun HomeScreenComponent(
         item {
             CreateNewTaskBtn(
                 onClick = {
-                    navController.navigate(EditScreenDestination(null))
+                    onNavigateToEditScreen(null)
                 },
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )

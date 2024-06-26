@@ -5,6 +5,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -13,14 +17,20 @@ import com.todo.app.todoappcompose.app.theme.AppTheme
 
 @Composable
 fun NewTaskFloatingButton(
-    onClick: () -> Unit,
+    onNewTask: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var enabled by remember { mutableStateOf(true) }
     FloatingActionButton(
-        onClick = { onClick.invoke() },
         shape = CircleShape,
         modifier = modifier
             .size(56.dp),
+        onClick = {
+            if (enabled) {
+                enabled = false
+                onNewTask()
+            }
+        },
         contentColor = AppTheme.colorScheme.colorWhite,
         containerColor = AppTheme.colorScheme.colorBlue,
     ) {
