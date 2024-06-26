@@ -1,6 +1,5 @@
 package com.todo.app.todoappcompose.presentation.home.view
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
