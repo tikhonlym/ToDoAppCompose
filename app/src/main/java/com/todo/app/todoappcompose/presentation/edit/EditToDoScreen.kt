@@ -43,7 +43,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
 import com.todo.app.todoappcompose.data.objects.TaskDate
@@ -61,9 +60,9 @@ data class EditScreenDestination(
 
 @Composable
 fun EditScreen(
-    id: String? = null,
-    navController: NavController,
+    onNavigateBack: () -> Unit,
     viewModel: EditTodoViewModel = hiltViewModel(),
+    id: String? = null,
 ) {
     Column(
         modifier = Modifier
@@ -83,10 +82,10 @@ fun EditScreen(
 
         EditToolBar(
             onClose = {
-                navController.popBackStack()
+                onNavigateBack()
             },
             onSaveTask = {
-                navController.popBackStack()
+                onNavigateBack()
             }
         )
         Divider(
@@ -154,7 +153,7 @@ fun EditScreen(
             DeleteTaskButton(
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
                 onClick = {
-                    navController.popBackStack()
+                    onNavigateBack()
                 }
             )
 
@@ -169,6 +168,7 @@ private fun EditToolBar(
     onSaveTask: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var onClickEnabled by remember { mutableStateOf(true) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -181,10 +181,12 @@ private fun EditToolBar(
             modifier = Modifier
                 .size(24.dp)
                 .clickable(
+                    enabled = onClickEnabled,
                     interactionSource = null,
                     indication = null
                 ) {
                     onClose.invoke()
+                    onClickEnabled = false
                 },
             tint = AppTheme.colorScheme.labelPrimary,
             painter = painterResource(R.drawable.ic_close),
@@ -192,10 +194,12 @@ private fun EditToolBar(
         )
         Text(
             modifier = Modifier.clickable(
+                enabled = onClickEnabled,
                 interactionSource = null,
                 indication = null
             ) {
                 onSaveTask.invoke()
+                onClickEnabled = false
             },
             text = stringResource(R.string.btn_save_title),
             color = AppTheme.colorScheme.colorBlue,

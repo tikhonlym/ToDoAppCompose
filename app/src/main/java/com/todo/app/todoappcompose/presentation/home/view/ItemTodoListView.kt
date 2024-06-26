@@ -1,5 +1,6 @@
 package com.todo.app.todoappcompose.presentation.home.view
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,16 +36,16 @@ fun ItemTodoListView(
     onCompleteClick: (id: String, isDone: Boolean) -> Unit,
     onItemClicked: (id: String) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     showCompletedTasks: Boolean,
     data: TodoItem,
 ) {
     var completeState by remember { mutableStateOf(data.isDone) }
-
     AnimatedVisibility(!(!showCompletedTasks && completeState)) {
         Box(
             modifier
                 .fillMaxWidth()
-                .clickable {
+                .clickable(enabled = enabled) {
                     onItemClicked.invoke(data.id)
                 }
                 .background(AppTheme.colorScheme.backSecondary)
