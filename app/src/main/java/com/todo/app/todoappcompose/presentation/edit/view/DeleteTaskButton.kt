@@ -1,6 +1,7 @@
 package com.todo.app.todoappcompose.presentation.edit.view
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
@@ -49,5 +51,18 @@ fun DeleteTaskButton(
             style = AppTheme.typographyScheme.body,
             color = AppTheme.colorScheme.colorRed
         )
+    }
+}
+
+@Preview
+@Composable
+private fun DeleteTaskButtonPreview() {
+    Column {
+        AppTheme {
+            DeleteTaskButton({})
+        }
+        AppTheme(darkTheme = true) {
+            DeleteTaskButton({})
+        }
     }
 }

@@ -84,5 +84,3 @@ private val lightColorScheme = AppColorScheme(
     backSecondary = BackSecondary,
     backElevated = BackElevated,
 )
-
-

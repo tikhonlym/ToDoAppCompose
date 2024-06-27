@@ -1,6 +1,5 @@
 package com.todo.app.todoappcompose.presentation.edit
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,17 +16,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDefaults
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,18 +28,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.data.objects.TaskDate
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
+import com.todo.app.todoappcompose.domain.objects.TodoItem
+import com.todo.app.todoappcompose.domain.usecase.CreateTask
+import com.todo.app.todoappcompose.domain.usecase.DeleteTask
+import com.todo.app.todoappcompose.domain.usecase.GetTask
+import com.todo.app.todoappcompose.domain.usecase.UpdateTaskDeadline
+import com.todo.app.todoappcompose.domain.usecase.UpdateTaskImportance
+import com.todo.app.todoappcompose.domain.usecase.UpdateTaskText
 import com.todo.app.todoappcompose.presentation.Constants
 import com.todo.app.todoappcompose.presentation.edit.view.ChangeImportanceView
+import com.todo.app.todoappcompose.presentation.edit.view.DeadLineView
 import com.todo.app.todoappcompose.presentation.edit.view.DeleteTaskButton
 import kotlinx.serialization.Serializable
 
@@ -61,7 +59,7 @@ data class EditScreenDestination(
 @Composable
 fun EditScreen(
     onNavigateBack: () -> Unit,
-    viewModel: EditTodoViewModel = hiltViewModel(),
+    viewModel: EditViewModel = hiltViewModel(),
     id: String? = null,
 ) {
     Column(
@@ -88,6 +86,7 @@ fun EditScreen(
                 onNavigateBack()
             }
         )
+
         Divider(
             modifier = Modifier.shadow(elevation = 4.dp),
             color = AppTheme.colorScheme.supportSeparator
@@ -162,6 +161,43 @@ fun EditScreen(
     }
 }
 
+@Preview
+@Composable
+private fun EditScreenPreview() {
+    AppTheme {
+        EditScreen(
+            {}, id = null,
+            viewModel = EditViewModel(
+                deleteTaskUseCase = DeleteTask(TodoItemsRepositoryImpl()),
+                updateTaskTextUseCase = UpdateTaskText(TodoItemsRepositoryImpl()),
+                updateTaskImportanceUseCase = UpdateTaskImportance(TodoItemsRepositoryImpl()),
+                updateTaskDeadlineUseCase = UpdateTaskDeadline(TodoItemsRepositoryImpl()),
+                createTaskUseCase = CreateTask(TodoItemsRepositoryImpl()),
+                getTaskUseCase = GetTask(TodoItemsRepositoryImpl())
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun EditScreenPreviewDark() {
+    AppTheme(darkTheme = true) {
+        EditScreen(
+            {}, id = null,
+            viewModel = EditViewModel(
+                deleteTaskUseCase = DeleteTask(TodoItemsRepositoryImpl()),
+                updateTaskTextUseCase = UpdateTaskText(TodoItemsRepositoryImpl()),
+                updateTaskImportanceUseCase = UpdateTaskImportance(TodoItemsRepositoryImpl()),
+                updateTaskDeadlineUseCase = UpdateTaskDeadline(TodoItemsRepositoryImpl()),
+                createTaskUseCase = CreateTask(TodoItemsRepositoryImpl()),
+                getTaskUseCase = GetTask(TodoItemsRepositoryImpl())
+            )
+        )
+    }
+
+}
+
 @Composable
 private fun EditToolBar(
     onClose: () -> Unit,
@@ -207,138 +243,3 @@ private fun EditToolBar(
         )
     }
 }
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DeadLineView(
-    modifier: Modifier = Modifier,
-    deadline: TaskDate?,
-) {
-    var isDeadlineActive by remember { mutableStateOf(deadline != null) }
-    var date by remember { mutableStateOf(TaskDate(0L)) }
-
-    var dateDialogController by remember { mutableStateOf(false) }
-    val datePickerState = rememberDatePickerState()
-
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(
-            modifier = Modifier.clickable(
-                interactionSource = null,
-                indication = null
-            ) {
-                if (isDeadlineActive)
-                    dateDialogController = true
-            },
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(R.string.deadline_title),
-                color = AppTheme.colorScheme.labelPrimary,
-                style = AppTheme.typographyScheme.body
-            )
-            AnimatedVisibility(visible = isDeadlineActive) {
-                Text(
-                    date.toString(),
-                    color = AppTheme.colorScheme.colorBlue,
-                    style = AppTheme.typographyScheme.subhead
-                )
-            }
-        }
-        Switch(
-            checked = isDeadlineActive,
-            onCheckedChange = {
-                if (!it) {
-                    isDeadlineActive = false
-                }
-                if (it) {
-                    dateDialogController = true
-                }
-            },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = AppTheme.colorScheme.colorBlue,
-                checkedTrackColor = AppTheme.colorScheme.colorLightBlue,
-                checkedBorderColor = Color.Transparent,
-                uncheckedThumbColor = AppTheme.colorScheme.backElevated,
-                uncheckedTrackColor = AppTheme.colorScheme.supportOverlay,
-                uncheckedBorderColor = Color.Transparent,
-            )
-        )
-    }
-
-    if (dateDialogController) {
-        DatePickerDialog(
-            colors = DatePickerDefaults.colors(
-                containerColor = AppTheme.colorScheme.backSecondary
-            ),
-            onDismissRequest = { dateDialogController = false },
-            confirmButton = {
-                TextButton(onClick = {
-                    dateDialogController = false
-                    if (datePickerState.selectedDateMillis != null) {
-                        isDeadlineActive = true
-                        date = TaskDate(datePickerState.selectedDateMillis!!)
-                    }
-                }) {
-                    Text(
-                        text = stringResource(R.string.done_txt),
-                        color = AppTheme.colorScheme.colorBlue,
-                        style = AppTheme.typographyScheme.button
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    dateDialogController = false
-                }) {
-                    Text(
-                        text = stringResource(R.string.cancel_txt),
-                        color = AppTheme.colorScheme.colorBlue,
-                        style = AppTheme.typographyScheme.button
-                    )
-                }
-            }
-        ) {
-            DatePicker(
-                state = datePickerState,
-                colors = DatePickerDefaults.colors(
-                    todayContentColor = AppTheme.colorScheme.colorBlue,
-                    todayDateBorderColor = AppTheme.colorScheme.colorBlue,
-                    dayContentColor = AppTheme.colorScheme.labelPrimary,
-                    selectedDayContentColor = AppTheme.colorScheme.colorWhite,
-                    selectedDayContainerColor = AppTheme.colorScheme.colorBlue,
-                )
-            )
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

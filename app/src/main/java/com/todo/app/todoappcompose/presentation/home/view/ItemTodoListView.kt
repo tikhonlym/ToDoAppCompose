@@ -24,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.data.objects.TodoImportance
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.domain.objects.TodoImportance
+import com.todo.app.todoappcompose.domain.objects.TodoItem
 
 @Composable
 fun ItemTodoListView(
@@ -130,5 +132,49 @@ fun ItemTodoListView(
                 tint = AppTheme.colorScheme.labelTertiary
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ItemTodoListViewPreview() {
+    AppTheme() {
+        ItemTodoListView(
+            onCompleteClick = { id, isDone -> },
+            onItemClicked = { },
+            modifier = Modifier,
+            enabled = false,
+            showCompletedTasks = true,
+            data = TodoItem(
+                id = "test",
+                text = "Test testTest testTest testTest testTest testTest testTest test",
+                importance = TodoImportance.NORMAL,
+                deadline = null,
+                isDone = true,
+                creationDate = TaskDate(0)
+            ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ItemTodoListViewPreviewDark() {
+    AppTheme(darkTheme = true) {
+        ItemTodoListView(
+            onCompleteClick = { id, isDone -> },
+            onItemClicked = { },
+            modifier = Modifier,
+            enabled = false,
+            showCompletedTasks = true,
+            data = TodoItem(
+                id = "test",
+                text = "Test testTest testTest testTest testTest testTest testTest test",
+                importance = TodoImportance.HIGH,
+                deadline = null,
+                isDone = false,
+                creationDate = TaskDate(0)
+            ),
+        )
     }
 }

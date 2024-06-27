@@ -1,7 +1,7 @@
 package com.todo.app.todoappcompose.presentation.home
 
 import androidx.lifecycle.ViewModel
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.domain.objects.TodoItem
 import com.todo.app.todoappcompose.domain.usecase.CompleteTask
 import com.todo.app.todoappcompose.domain.usecase.CountCompletedTask
 import com.todo.app.todoappcompose.domain.usecase.GetTaskList

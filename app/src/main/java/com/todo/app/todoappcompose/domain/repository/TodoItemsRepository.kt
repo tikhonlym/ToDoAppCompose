@@ -1,8 +1,8 @@
 package com.todo.app.todoappcompose.domain.repository
 
-import com.todo.app.todoappcompose.data.objects.TaskDate
-import com.todo.app.todoappcompose.data.objects.TodoImportance
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.domain.objects.TodoImportance
+import com.todo.app.todoappcompose.domain.objects.TodoItem
 
 interface TodoItemsRepository {
     fun getTaskList(): List<TodoItem>

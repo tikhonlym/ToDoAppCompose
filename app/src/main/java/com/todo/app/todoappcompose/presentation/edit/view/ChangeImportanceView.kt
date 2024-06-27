@@ -15,10 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.data.objects.TodoImportance
+import com.todo.app.todoappcompose.domain.objects.TodoImportance
 
 @Composable
 fun ChangeImportanceView(
@@ -35,52 +36,15 @@ fun ChangeImportanceView(
             expandedImportanceMenu = true
         }
     ) {
-        DropdownMenu(
-            modifier = Modifier
-                .background(AppTheme.colorScheme.backSecondary),
-            expanded = expandedImportanceMenu,
-            onDismissRequest = { expandedImportanceMenu = false },
-        ) {
-            DropdownMenuItem(
-                onClick = {
-                    onClick.invoke(TodoImportance.NORMAL)
-                    expandedImportanceMenu = false
-                },
-                text = {
-                    Text(
-                        text = stringResource(R.string.no_category_title),
-                        color = AppTheme.colorScheme.labelPrimary,
-                        style = AppTheme.typographyScheme.body
-                    )
-                }
-            )
-            DropdownMenuItem(
-                onClick = {
-                    onClick.invoke(TodoImportance.LOW)
-                    expandedImportanceMenu = false
-                },
-                text = {
-                    Text(
-                        text = stringResource(R.string.low_category_title),
-                        color = AppTheme.colorScheme.labelPrimary,
-                        style = AppTheme.typographyScheme.body
-                    )
-                }
-            )
-            DropdownMenuItem(
-                onClick = {
-                    onClick.invoke(TodoImportance.HIGH)
-                    expandedImportanceMenu = false
-                },
-                text = {
-                    Text(
-                        text = stringResource(R.string.high_category_title),
-                        color = AppTheme.colorScheme.colorRed,
-                        style = AppTheme.typographyScheme.body
-                    )
-                }
-            )
-        }
+        ChangeImportanceMenu(
+            onChangeImportance = { importance ->
+                onClick(importance)
+            },
+            expandedImportanceMenu = expandedImportanceMenu,
+            onChangeExpanded = { state ->
+                expandedImportanceMenu = state
+            }
+        )
         Text(
             text = stringResource(R.string.importance_title),
             color = AppTheme.colorScheme.labelPrimary,
@@ -105,6 +69,74 @@ fun ChangeImportanceView(
                 color = AppTheme.colorScheme.labelTertiary,
                 style = AppTheme.typographyScheme.subhead
             )
+        }
+    }
+}
+
+@Composable
+fun ChangeImportanceMenu(
+    onChangeImportance: (TodoImportance) -> Unit,
+    modifier: Modifier = Modifier,
+    expandedImportanceMenu: Boolean,
+    onChangeExpanded: (Boolean) -> Unit,
+) {
+    DropdownMenu(
+        modifier = modifier
+            .background(AppTheme.colorScheme.backSecondary),
+        expanded = expandedImportanceMenu,
+        onDismissRequest = { onChangeExpanded(false) },
+    ) {
+        DropdownMenuItem(
+            onClick = {
+                onChangeImportance(TodoImportance.NORMAL)
+                onChangeExpanded(false)
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.no_category_title),
+                    color = AppTheme.colorScheme.labelPrimary,
+                    style = AppTheme.typographyScheme.body
+                )
+            }
+        )
+        DropdownMenuItem(
+            onClick = {
+                onChangeImportance(TodoImportance.LOW)
+                onChangeExpanded(false)
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.low_category_title),
+                    color = AppTheme.colorScheme.labelPrimary,
+                    style = AppTheme.typographyScheme.body
+                )
+            }
+        )
+        DropdownMenuItem(
+            onClick = {
+                onChangeImportance(TodoImportance.HIGH)
+                onChangeExpanded(false)
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.high_category_title),
+                    color = AppTheme.colorScheme.colorRed,
+                    style = AppTheme.typographyScheme.body
+                )
+            }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ChangeImportanceViewPreview() {
+    Column {
+        AppTheme {
+            ChangeImportanceView({})
+        }
+        AppTheme(darkTheme = true) {
+            ChangeImportanceView({})
         }
     }
 }

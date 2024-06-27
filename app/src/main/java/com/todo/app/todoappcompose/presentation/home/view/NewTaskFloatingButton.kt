@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
@@ -35,5 +36,13 @@ fun NewTaskFloatingButton(
         containerColor = AppTheme.colorScheme.colorBlue,
     ) {
         Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
+    }
+}
+
+@Preview
+@Composable
+private fun NewTaskFloatingButtonPreview() {
+    AppTheme {
+        NewTaskFloatingButton({})
     }
 }

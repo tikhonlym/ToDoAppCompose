@@ -30,12 +30,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.presentation.home.view.CreateNewTaskBtn
+import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
+import com.todo.app.todoappcompose.domain.usecase.CompleteTask
+import com.todo.app.todoappcompose.domain.usecase.CountCompletedTask
+import com.todo.app.todoappcompose.domain.usecase.GetTaskList
+import com.todo.app.todoappcompose.presentation.home.view.CreateTaskListItem
 import com.todo.app.todoappcompose.presentation.home.view.ItemTodoListView
 import com.todo.app.todoappcompose.presentation.home.view.NewTaskFloatingButton
 import com.todo.app.todoappcompose.presentation.home.view.SwitchVisibilityTaskButton
@@ -44,6 +49,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 object HomeScreenDestination
+
+private val EXPANDED_TOP_BAR_HEIGHT = 85.dp
+private val COLLAPSED_TOP_BAR_HEIGHT = 56.dp
 
 @Composable
 fun HomeScreen(
@@ -123,7 +131,7 @@ private fun HomeScreenComponent(
         }
 
         item {
-            CreateNewTaskBtn(
+            CreateTaskListItem(
                 onClick = {
                     onNavigateToEditScreen(null)
                 },
@@ -212,5 +220,38 @@ private fun CollapsedTopBar(
     }
 }
 
-private val EXPANDED_TOP_BAR_HEIGHT = 85.dp
-private val COLLAPSED_TOP_BAR_HEIGHT = 56.dp
+@Preview
+@Composable
+private fun CollapsedTopBarPreview() {
+    AppTheme {
+        CollapsedTopBar(isCollapsed = true)
+    }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    AppTheme {
+        HomeScreen(
+            {}, HomeViewModel(
+                getTodoList = GetTaskList(TodoItemsRepositoryImpl()),
+                completeTodoTask = CompleteTask(TodoItemsRepositoryImpl()),
+                countCompletedTask = CountCompletedTask(TodoItemsRepositoryImpl())
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreviewDark() {
+    AppTheme(darkTheme = true) {
+        HomeScreen(
+            {}, HomeViewModel(
+                getTodoList = GetTaskList(TodoItemsRepositoryImpl()),
+                completeTodoTask = CompleteTask(TodoItemsRepositoryImpl()),
+                countCompletedTask = CountCompletedTask(TodoItemsRepositoryImpl())
+            )
+        )
+    }
+}
