@@ -2,7 +2,7 @@
     <string name="app_name">ToDoAppCompose</string>
 
     <string name="my_tasks_title">Мои дела</string>
-    <string name="completed_title">Выполнено — </string>
+    <string name="completed_title">Выполнено —&#160;</string>
     <string name="new_title">Новое</string>
     <string name="no_category_title">Нет</string>
     <string name="low_category_title">Низкий</string>
