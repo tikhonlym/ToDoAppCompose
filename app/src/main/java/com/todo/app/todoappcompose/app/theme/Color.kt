@@ -1,6 +1,21 @@
 package com.todo.app.todoappcompose.app.theme
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
+import com.todo.app.todoappcompose.app.theme.local.AppColorScheme
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
 
 // Light theme colors -
 val SupportSeparator = Color(0x33000000)
@@ -37,3 +52,80 @@ val ColorWhiteDark = Color(0xFFFFFFFF)
 val BackPrimaryDark = Color(0xFF161618)
 val BackSecondaryDark = Color(0xFF252528)
 val BackElevatedDark = Color(0xFF3C3C3F)
+
+val darkColorScheme = AppColorScheme(
+    supportSeparator = SupportSeparatorDark,
+    supportOverlay = SupportOverlayDark,
+    labelPrimary = LabelPrimaryDark,
+    labelSecondary = LabelSecondaryDark,
+    labelTertiary = LabelTertiaryDark,
+    labelDisable = LabelDisableDark,
+    colorRed = ColorRedDark,
+    colorGreen = ColorGreenDark,
+    colorBlue = ColorBlueDark,
+    colorLightBlue = ColorLightBlueDark,
+    colorGray = ColorGrayDark,
+    colorGrayLight = ColorGrayLightDark,
+    colorWhite = ColorWhiteDark,
+    backPrimary = BackPrimaryDark,
+    backSecondary = BackSecondaryDark,
+    backElevated = BackElevatedDark,
+)
+
+val lightColorScheme = AppColorScheme(
+    supportSeparator = SupportSeparator,
+    supportOverlay = SupportOverlay,
+    labelPrimary = LabelPrimary,
+    labelSecondary = LabelSecondary,
+    labelTertiary = LabelTertiary,
+    labelDisable = LabelDisable,
+    colorRed = ColorRed,
+    colorGreen = ColorGreen,
+    colorBlue = ColorBlue,
+    colorLightBlue = ColorLightBlue,
+    colorGray = ColorGray,
+    colorGrayLight = ColorGrayLight,
+    colorWhite = ColorWhite,
+    backPrimary = BackPrimary,
+    backSecondary = BackSecondary,
+    backElevated = BackElevated,
+)
+
+@Preview
+@Composable
+private fun ColorPreview() {
+    Row {
+        AppTheme() {
+            Column {
+                AppColorScheme::class.memberProperties.forEach { property ->
+                    property.isAccessible = true
+                    val color = property.get(AppTheme.colorScheme) as Long
+                    Box(
+                        modifier = Modifier
+                            .width(120.dp)
+                            .height(40.dp)
+                            .background(Color(color.toColorInt()))
+                    ) {
+                        Text(text = property.name)
+                    }
+                }
+            }
+        }
+        AppTheme(darkTheme = true) {
+            Column {
+                AppColorScheme::class.memberProperties.forEach { property ->
+                    property.isAccessible = true
+                    val color = property.get(AppTheme.colorScheme) as Long
+                    Box(
+                        modifier = Modifier
+                            .width(120.dp)
+                            .height(40.dp)
+                            .background(Color(color.toColorInt()))
+                    ) {
+                        Text(text = property.name)
+                    }
+                }
+            }
+        }
+    }
+}
