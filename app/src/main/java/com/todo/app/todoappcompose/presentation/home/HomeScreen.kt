@@ -64,6 +64,7 @@ fun HomeScreen(
             .background(AppTheme.colorScheme.backPrimary)
     ) {
         HomeScreenComponent(onNavigateToEditScreen, viewModel)
+
         NewTaskFloatingButton(
             onNewTask = {
                 onNavigateToEditScreen(null)
@@ -97,6 +98,7 @@ private fun HomeScreenComponent(
     val showCompleted = viewModel.showCompletedTasks.collectAsState()
     val countCompletedTasks = viewModel.countCompleted.collectAsState()
     var onTaskClickEnabled by remember { mutableStateOf(true) }
+
     CollapsedTopBar(
         modifier = Modifier.zIndex(2f),
         isCollapsed = isCollapsed

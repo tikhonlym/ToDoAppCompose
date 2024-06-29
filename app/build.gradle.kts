@@ -54,6 +54,8 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("reflect"))
+
     //Dagger Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

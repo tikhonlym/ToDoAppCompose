@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation
+package com.todo.app.todoappcompose.presentation.util
 
 import com.todo.app.todoappcompose.domain.objects.TaskDate
 import com.todo.app.todoappcompose.domain.objects.TodoImportance

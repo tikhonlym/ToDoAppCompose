@@ -25,12 +25,10 @@ import com.todo.app.todoappcompose.domain.objects.TaskDate
 
 @Composable
 fun DeadLineView(
+    onDeadlineDate: (date: TaskDate?) -> Unit,
     modifier: Modifier = Modifier,
-    deadline: TaskDate?,
+    deadlineDate: TaskDate?,
 ) {
-    var isDeadlineActive by remember { mutableStateOf(deadline != null) }
-    var deadlineDate by remember { mutableStateOf(TaskDate(0L)) }
-
     var dateDialogController by remember { mutableStateOf(false) }
 
     Row(
@@ -43,7 +41,7 @@ fun DeadLineView(
                 interactionSource = null,
                 indication = null
             ) {
-                if (isDeadlineActive)
+                if (deadlineDate != null)
                     dateDialogController = true
             },
             verticalArrangement = Arrangement.Center
@@ -53,7 +51,7 @@ fun DeadLineView(
                 color = AppTheme.colorScheme.labelPrimary,
                 style = AppTheme.typographyScheme.body
             )
-            AnimatedVisibility(visible = isDeadlineActive) {
+            AnimatedVisibility(visible = deadlineDate != null) {
                 Text(
                     text = deadlineDate.toString(),
                     color = AppTheme.colorScheme.colorBlue,
@@ -62,10 +60,10 @@ fun DeadLineView(
             }
         }
         Switch(
-            checked = isDeadlineActive,
+            checked = deadlineDate != null,
             onCheckedChange = {
                 if (!it) {
-                    isDeadlineActive = false
+                    onDeadlineDate(null)
                 }
                 if (it) {
                     dateDialogController = true
@@ -88,11 +86,8 @@ fun DeadLineView(
                 dateDialogController = state
             },
             onChangeDeadlineDate = { date ->
-                deadlineDate = date
+                onDeadlineDate(date)
             },
-            onChangeDeadlineActive = { state ->
-                isDeadlineActive = state
-            }
         )
     }
 }
@@ -103,8 +98,12 @@ private fun DeadLineViewPreview() {
     Column {
         AppTheme {
             Column {
-                DeadLineView(deadline = TaskDate(0))
-                DeadLineView(deadline = null)
+                DeadLineView(
+                    {}, deadlineDate = null
+                )
+                DeadLineView(
+                    {}, deadlineDate = TaskDate(0L)
+                )
             }
         }
     }

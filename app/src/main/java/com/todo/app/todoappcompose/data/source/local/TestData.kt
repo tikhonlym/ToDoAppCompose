@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.data.repository.todo
+package com.todo.app.todoappcompose.data.source.local
 
 import com.todo.app.todoappcompose.domain.objects.TaskDate
 import com.todo.app.todoappcompose.domain.objects.TodoImportance
