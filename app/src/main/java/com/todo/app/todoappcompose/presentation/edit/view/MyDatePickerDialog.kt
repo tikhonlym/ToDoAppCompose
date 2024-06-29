@@ -21,7 +21,6 @@ fun MyDatePickerDialog(
     onChangeController: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     onChangeDeadlineDate: (TaskDate) -> Unit,
-    onChangeDeadlineActive: (Boolean) -> Unit,
 ) {
     val datePickerState = rememberDatePickerState()
     DatePickerDialog(
@@ -34,7 +33,6 @@ fun MyDatePickerDialog(
             TextButton(onClick = {
                 onChangeController(false)
                 if (datePickerState.selectedDateMillis != null) {
-                    onChangeDeadlineActive(true)
                     onChangeDeadlineDate(TaskDate(datePickerState.selectedDateMillis!!))
                 }
             }) {
@@ -88,7 +86,7 @@ fun MyDatePickerDialog(
 @Composable
 private fun MyDatePickerDialogPreview() {
     AppTheme {
-        MyDatePickerDialog({}, Modifier, {}, {})
+        MyDatePickerDialog({}, Modifier, {})
     }
 }
 
@@ -96,6 +94,6 @@ private fun MyDatePickerDialogPreview() {
 @Composable
 private fun MyDatePickerDialogPreviewDark() {
     AppTheme(darkTheme = true) {
-        MyDatePickerDialog({}, Modifier, {}, {})
+        MyDatePickerDialog({}, Modifier, {})
     }
 }

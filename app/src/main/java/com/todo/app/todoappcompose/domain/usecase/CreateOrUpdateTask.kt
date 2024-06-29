@@ -4,11 +4,11 @@ import com.todo.app.todoappcompose.domain.objects.TodoItem
 import com.todo.app.todoappcompose.domain.repository.TodoItemsRepository
 import javax.inject.Inject
 
-class CreateTask @Inject constructor(
+class CreateOrUpdateTask @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute(task: TodoItem) {
-        repository.createTask(task)
+    suspend fun execute(task: TodoItem) {
+        repository.createOrUpdateTask(task)
     }
 }

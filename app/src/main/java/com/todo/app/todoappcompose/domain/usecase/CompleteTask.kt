@@ -7,7 +7,7 @@ class CompleteTask @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute(id: String, isDone: Boolean) {
+    suspend fun execute(id: String, isDone: Boolean) {
         repository.completeTask(id, isDone)
     }
 }

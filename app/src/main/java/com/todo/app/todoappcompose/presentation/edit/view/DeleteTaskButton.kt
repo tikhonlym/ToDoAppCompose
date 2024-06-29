@@ -26,8 +26,9 @@ import com.todo.app.todoappcompose.app.theme.AppTheme
 fun DeleteTaskButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    active: Boolean,
 ) {
-    var onClickEnabled by remember { mutableStateOf(true) }
+    var onClickEnabled by remember { mutableStateOf(active) }
     Row(
         modifier = modifier.clickable(
             enabled = onClickEnabled,
@@ -42,14 +43,14 @@ fun DeleteTaskButton(
         Icon(
             modifier = Modifier.size(24.dp),
             painter = painterResource(R.drawable.ic_delete),
-            tint = AppTheme.colorScheme.colorRed,
+            tint = if (active) AppTheme.colorScheme.colorRed else AppTheme.colorScheme.supportSeparator,
             contentDescription = null
         )
         Spacer(modifier = Modifier.width(12.dp))
         Text(
             text = stringResource(R.string.delete_title),
             style = AppTheme.typographyScheme.body,
-            color = AppTheme.colorScheme.colorRed
+            color = if (active) AppTheme.colorScheme.colorRed else AppTheme.colorScheme.supportSeparator
         )
     }
 }
@@ -59,10 +60,10 @@ fun DeleteTaskButton(
 private fun DeleteTaskButtonPreview() {
     Column {
         AppTheme {
-            DeleteTaskButton({})
+            DeleteTaskButton({}, active = true)
         }
-        AppTheme(darkTheme = true) {
-            DeleteTaskButton({})
+        AppTheme() {
+            DeleteTaskButton({}, active = false)
         }
     }
 }

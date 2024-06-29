@@ -7,5 +7,5 @@ class GetTask @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute(id: String) = repository.getTask(id)
+    suspend fun execute(id: String) = repository.getTask(id)
 }

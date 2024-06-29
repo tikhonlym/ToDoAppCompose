@@ -8,7 +8,7 @@ class GetTaskList @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute(): List<TodoItem> {
+    suspend fun execute(): List<TodoItem> {
         return repository.getTaskList()
     }
 }

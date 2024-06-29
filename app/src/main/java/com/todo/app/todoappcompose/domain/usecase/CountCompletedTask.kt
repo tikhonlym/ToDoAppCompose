@@ -7,5 +7,5 @@ class CountCompletedTask @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute() = repository.countCompletedTask()
+    suspend fun execute() = repository.countCompletedTask()
 }

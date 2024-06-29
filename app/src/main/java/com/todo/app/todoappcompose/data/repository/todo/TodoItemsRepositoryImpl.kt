@@ -1,9 +1,13 @@
 package com.todo.app.todoappcompose.data.repository.todo
 
-import com.todo.app.todoappcompose.domain.objects.TaskDate
-import com.todo.app.todoappcompose.domain.objects.TodoImportance
+import com.todo.app.todoappcompose.data.source.local.TestData
 import com.todo.app.todoappcompose.domain.objects.TodoItem
 import com.todo.app.todoappcompose.domain.repository.TodoItemsRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * localTestData: MutableList<TodoItem> - Created only for test logic!
@@ -11,55 +15,52 @@ import com.todo.app.todoappcompose.domain.repository.TodoItemsRepository
  * **/
 class TodoItemsRepositoryImpl(
     private val localTestData: MutableList<TodoItem> = TestData.dataList,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : TodoItemsRepository {
 
-    override fun getTaskList(): List<TodoItem> = localTestData
+    override suspend fun getTaskList(): List<TodoItem> = CoroutineScope(dispatcher).async {
+        localTestData
+    }.await()
 
-    override fun completeTask(id: String, isDone: Boolean) {
-        val indexCompletedElement = localTestData.indexOfFirst {
-            it.id == id
+    override suspend fun completeTask(id: String, isDone: Boolean) {
+        CoroutineScope(dispatcher).launch {
+            val indexCompletedElement = localTestData.indexOfFirst {
+                it.id == id
+            }
+            val curTask = localTestData[indexCompletedElement]
+            localTestData[indexCompletedElement] = curTask.copy(isDone = isDone)
         }
-        val curTask = localTestData[indexCompletedElement]
-        localTestData[indexCompletedElement] = curTask.copy(isDone = isDone)
     }
 
-    override fun countCompletedTask() = localTestData.count { it.isDone }
+    override suspend fun countCompletedTask() = CoroutineScope(dispatcher).async {
+        localTestData.count { it.isDone }
+    }.await()
 
-    override fun getTask(id: String) = localTestData.first { it.id == id }
+    override suspend fun getTask(id: String) = CoroutineScope(dispatcher).async {
+        localTestData.first { it.id == id }
+    }.await()
 
-    override fun deleteTask(id: String) {
-        val index = localTestData.indexOfFirst { it.id == id }
-        localTestData.removeAt(index)
-    }
-
-    override fun updateTaskDeadline(id: String, date: TaskDate) {
-        val indexCompletedElement = localTestData.indexOfFirst {
-            it.id == id
+    override suspend fun deleteTask(id: String) {
+        CoroutineScope(dispatcher).launch {
+            val index = localTestData.indexOfFirst { it.id == id }
+            localTestData.removeAt(index)
         }
-        val curTask = localTestData[indexCompletedElement]
-        localTestData[indexCompletedElement] = curTask.copy(deadline = date)
     }
 
-
-    override fun updateTaskText(id: String, text: String) {
-        val indexCompletedElement = localTestData.indexOfFirst {
-            it.id == id
+    override suspend fun createOrUpdateTask(task: TodoItem) {
+        CoroutineScope(dispatcher).launch {
+            val index = localTestData.indexOfFirst { it.id == task.id }
+            if (index == NON_EXISTENT_INDEX) {
+                localTestData.add(FIRST_INDEX, task)
+            } else {
+                localTestData[index] = task
+            }
         }
-        val curTask = localTestData[indexCompletedElement]
-        localTestData[indexCompletedElement] = curTask.copy(text = text)
     }
 
-
-    override fun updateTaskImportance(id: String, importance: TodoImportance) {
-        val indexCompletedElement = localTestData.indexOfFirst {
-            it.id == id
-        }
-        val curTask = localTestData[indexCompletedElement]
-        localTestData[indexCompletedElement] = curTask.copy(importance = importance)
+    companion object {
+        private const val NON_EXISTENT_INDEX = -1
+        private const val FIRST_INDEX = 0
     }
-
-    override fun createTask(task: TodoItem) {
-        localTestData.add(task)
-    }
-
 }
+
