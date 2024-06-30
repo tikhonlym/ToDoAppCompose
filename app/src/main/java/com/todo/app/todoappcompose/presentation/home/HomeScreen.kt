@@ -36,14 +36,15 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
+import com.todo.app.todoappcompose.app.dispatchers.DispatchersImpl
 import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
-import com.todo.app.todoappcompose.domain.usecase.CompleteTask
-import com.todo.app.todoappcompose.domain.usecase.CountCompletedTask
-import com.todo.app.todoappcompose.domain.usecase.GetTaskList
-import com.todo.app.todoappcompose.presentation.home.view.CreateTaskListItem
-import com.todo.app.todoappcompose.presentation.home.view.ItemTodoListView
-import com.todo.app.todoappcompose.presentation.home.view.NewTaskFloatingButton
-import com.todo.app.todoappcompose.presentation.home.view.SwitchVisibilityTaskButton
+import com.todo.app.todoappcompose.domain.usecase.CompleteTaskUseCase
+import com.todo.app.todoappcompose.domain.usecase.CountCompletedTaskUseCase
+import com.todo.app.todoappcompose.domain.usecase.GetTaskListUseCase
+import com.todo.app.todoappcompose.presentation.home.ui.CreateTaskUiListItem
+import com.todo.app.todoappcompose.presentation.home.ui.TodoUiItem
+import com.todo.app.todoappcompose.presentation.home.ui.NewTaskFloatingButton
+import com.todo.app.todoappcompose.presentation.home.ui.SwitchVisibilityButton
 import kotlinx.serialization.Serializable
 
 
@@ -94,6 +95,8 @@ private fun HomeScreenComponent(
         }
     }
 
+    viewModel.countCompletedTask()
+
     val todoList = viewModel.todoList.collectAsState()
     val showCompleted = viewModel.showCompletedTasks.collectAsState()
     val countCompletedTasks = viewModel.countCompleted.collectAsState()
@@ -117,7 +120,7 @@ private fun HomeScreenComponent(
 
         items(count = todoList.value.size) { index ->
             val curItem = todoList.value[index]
-            ItemTodoListView(
+            TodoUiItem(
                 onCompleteClick = { id, isDone ->
                     viewModel.completeTask(id, isDone)
                 },
@@ -133,7 +136,7 @@ private fun HomeScreenComponent(
         }
 
         item {
-            CreateTaskListItem(
+            CreateTaskUiListItem(
                 onClick = {
                     onNavigateToEditScreen(null)
                 },
@@ -179,7 +182,7 @@ private fun ExpandedToolbar(
                 style = AppTheme.typographyScheme.body,
                 color = AppTheme.colorScheme.labelTertiary
             )
-            SwitchVisibilityTaskButton(
+            SwitchVisibilityButton(
                 onClick = {
                     localShowState = !localShowState
                     onSwitch.invoke(localShowState)
@@ -236,9 +239,15 @@ private fun HomeScreenPreview() {
     AppTheme {
         HomeScreen(
             {}, HomeViewModel(
-                getTodoList = GetTaskList(TodoItemsRepositoryImpl()),
-                completeTodoTask = CompleteTask(TodoItemsRepositoryImpl()),
-                countCompletedTask = CountCompletedTask(TodoItemsRepositoryImpl())
+                getTodoListUseCase = GetTaskListUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                completeTodoTaskUseCase = CompleteTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                countCompletedTaskUseCase = CountCompletedTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                )
             )
         )
     }
@@ -250,9 +259,15 @@ private fun HomeScreenPreviewDark() {
     AppTheme(darkTheme = true) {
         HomeScreen(
             {}, HomeViewModel(
-                getTodoList = GetTaskList(TodoItemsRepositoryImpl()),
-                completeTodoTask = CompleteTask(TodoItemsRepositoryImpl()),
-                countCompletedTask = CountCompletedTask(TodoItemsRepositoryImpl())
+                getTodoListUseCase = GetTaskListUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                completeTodoTaskUseCase = CompleteTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                countCompletedTaskUseCase = CountCompletedTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                )
             )
         )
     }

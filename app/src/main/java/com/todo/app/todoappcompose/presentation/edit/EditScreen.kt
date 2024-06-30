@@ -40,17 +40,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
 import com.todo.app.todoappcompose.app.theme.shimmerBackground
+import com.todo.app.todoappcompose.app.dispatchers.DispatchersImpl
 import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
-import com.todo.app.todoappcompose.domain.objects.TaskDate
-import com.todo.app.todoappcompose.domain.usecase.CreateOrUpdateTask
-import com.todo.app.todoappcompose.domain.usecase.DeleteTask
-import com.todo.app.todoappcompose.domain.usecase.GetTask
-import com.todo.app.todoappcompose.presentation.edit.view.ChangeImportanceView
-import com.todo.app.todoappcompose.presentation.edit.view.DeadLineView
-import com.todo.app.todoappcompose.presentation.edit.view.DeleteTaskButton
+import com.todo.app.todoappcompose.domain.usecase.CreateOrUpdateTaskUseCase
+import com.todo.app.todoappcompose.domain.usecase.DeleteTaskUseCase
+import com.todo.app.todoappcompose.domain.usecase.GetTaskUseCase
+import com.todo.app.todoappcompose.presentation.edit.ui.ChangeImportanceUiItem
+import com.todo.app.todoappcompose.presentation.edit.ui.DeadlineUiItem
+import com.todo.app.todoappcompose.presentation.edit.ui.DeleteTaskButton
 import com.todo.app.todoappcompose.presentation.util.generateUniqueIdForTask
-import com.todo.app.todoappcompose.presentation.util.getCurrentDateTime
 import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
 
 @Serializable
@@ -166,7 +166,7 @@ fun EditScreenComponent(
     var textFieldValue by remember { mutableStateOf(TextFieldValue(todoTask.value.text)) }
     val todoText = textFieldValue.text.ifEmpty { stringResource(id = R.string.no_description) }
 
-    val deadlineDate: MutableState<TaskDate?> = remember { mutableStateOf(todoTask.value.deadline) }
+    val deadlineDate: MutableState<LocalDate?> = remember { mutableStateOf(todoTask.value.deadline) }
 
     Column(
         modifier = Modifier
@@ -191,7 +191,7 @@ fun EditScreenComponent(
                             importance = importanceState,
                             deadline = deadlineDate.value,
                             isDone = false,
-                            creationDate = TaskDate(getCurrentDateTime().time)
+                            creationDate = LocalDate.now()
                         )
                     } else {
                         todoTask.value.copy(
@@ -247,7 +247,7 @@ fun EditScreenComponent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            ChangeImportanceView(
+            ChangeImportanceUiItem(
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                 importance = importanceState,
                 onClick = { importance ->
@@ -257,7 +257,7 @@ fun EditScreenComponent(
 
             Divider(color = AppTheme.colorScheme.supportSeparator)
 
-            DeadLineView(
+            DeadlineUiItem(
                 onDeadlineDate = { date ->
                     deadlineDate.value = date
                 },
@@ -289,9 +289,17 @@ private fun EditScreenComponentPreview() {
         EditScreenComponent(
             {},
             viewModel = EditViewModel(
-                deleteTaskUseCase = DeleteTask(TodoItemsRepositoryImpl()),
-                createOrUpdateTaskUseCase = CreateOrUpdateTask(TodoItemsRepositoryImpl()),
-                getTaskUseCase = GetTask(TodoItemsRepositoryImpl())
+                deleteTaskUseCase = DeleteTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                createOrUpdateTaskUseCase = CreateOrUpdateTaskUseCase(
+                    TodoItemsRepositoryImpl(
+                        dispatcher = DispatchersImpl()
+                    )
+                ),
+                getTaskUseCase = GetTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                )
             )
         )
     }
@@ -304,9 +312,17 @@ private fun EditScreenComponentDark() {
         EditScreenComponent(
             {},
             viewModel = EditViewModel(
-                deleteTaskUseCase = DeleteTask(TodoItemsRepositoryImpl()),
-                createOrUpdateTaskUseCase = CreateOrUpdateTask(TodoItemsRepositoryImpl()),
-                getTaskUseCase = GetTask(TodoItemsRepositoryImpl())
+                deleteTaskUseCase = DeleteTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                ),
+                createOrUpdateTaskUseCase = CreateOrUpdateTaskUseCase(
+                    TodoItemsRepositoryImpl(
+                        dispatcher = DispatchersImpl()
+                    )
+                ),
+                getTaskUseCase = GetTaskUseCase(
+                    TodoItemsRepositoryImpl(dispatcher = DispatchersImpl())
+                )
             )
         )
     }

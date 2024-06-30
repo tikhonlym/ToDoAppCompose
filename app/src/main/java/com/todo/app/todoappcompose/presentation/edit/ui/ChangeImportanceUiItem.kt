@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.edit.view
+package com.todo.app.todoappcompose.presentation.edit.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +22,7 @@ import com.todo.app.todoappcompose.app.theme.AppTheme
 import com.todo.app.todoappcompose.domain.objects.TodoImportance
 
 @Composable
-fun ChangeImportanceView(
+fun ChangeImportanceUiItem(
     onClick: (TodoImportance) -> Unit,
     modifier: Modifier = Modifier,
     importance: TodoImportance? = null,
@@ -74,7 +74,7 @@ fun ChangeImportanceView(
 }
 
 @Composable
-fun ChangeImportanceMenu(
+private fun ChangeImportanceMenu(
     onChangeImportance: (TodoImportance) -> Unit,
     modifier: Modifier = Modifier,
     expandedImportanceMenu: Boolean,
@@ -130,13 +130,13 @@ fun ChangeImportanceMenu(
 
 @Preview
 @Composable
-private fun ChangeImportanceViewPreview() {
+private fun ChangeImportanceUiItemPreview() {
     Column {
         AppTheme {
-            ChangeImportanceView({})
+            ChangeImportanceUiItem({})
         }
         AppTheme(darkTheme = true) {
-            ChangeImportanceView({})
+            ChangeImportanceUiItem({})
         }
     }
 }

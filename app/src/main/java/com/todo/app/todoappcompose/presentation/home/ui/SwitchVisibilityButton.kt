@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.home.view
+package com.todo.app.todoappcompose.presentation.home.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
@@ -13,7 +13,7 @@ import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
 
 @Composable
-fun SwitchVisibilityTaskButton(
+fun SwitchVisibilityButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     checked: Boolean,
@@ -40,11 +40,11 @@ fun SwitchVisibilityTaskButton(
 
 @Preview
 @Composable
-private fun SwitchVisibilityTaskButtonPrev() {
+private fun SwitchVisibilityButtonPreview() {
     AppTheme {
         Row {
-            SwitchVisibilityTaskButton({}, checked = false)
-            SwitchVisibilityTaskButton({}, checked = true)
+            SwitchVisibilityButton({}, checked = false)
+            SwitchVisibilityButton({}, checked = true)
         }
     }
 }

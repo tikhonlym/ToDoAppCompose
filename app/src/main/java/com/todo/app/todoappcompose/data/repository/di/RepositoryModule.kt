@@ -1,7 +1,7 @@
 package com.todo.app.todoappcompose.data.repository.di
 
+import com.todo.app.todoappcompose.app.dispatchers.AppDispatchers
 import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
-import com.todo.app.todoappcompose.domain.repository.TodoItemsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +14,9 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideTodoRepository(): TodoItemsRepository = TodoItemsRepositoryImpl()
+    fun provideTodoRepository(dispatchers: AppDispatchers): TodoItemsRepositoryImpl =
+        TodoItemsRepositoryImpl(
+            dispatcher = dispatchers
+        )
 
 }

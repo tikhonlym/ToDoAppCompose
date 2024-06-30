@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.home.view
+package com.todo.app.todoappcompose.presentation.home.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -30,12 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.domain.objects.TaskDate
 import com.todo.app.todoappcompose.domain.objects.TodoImportance
 import com.todo.app.todoappcompose.domain.objects.TodoItem
+import com.todo.app.todoappcompose.presentation.util.millisecondsToLocalDate
+import java.time.LocalDate
 
 @Composable
-fun ItemTodoListView(
+fun TodoUiItem(
     onCompleteClick: (id: String, isDone: Boolean) -> Unit,
     onItemClicked: (id: String) -> Unit,
     modifier: Modifier = Modifier,
@@ -132,7 +133,7 @@ private fun ItemText(
     completeState: Boolean,
     modifier: Modifier = Modifier,
     text: String,
-    deadline: TaskDate?,
+    deadline: LocalDate?,
 ) {
     Column {
         Text(
@@ -164,9 +165,9 @@ private fun ItemText(
 
 @Preview
 @Composable
-private fun ItemTodoListViewPreview() {
+private fun TodoUiItemPreview() {
     AppTheme() {
-        ItemTodoListView(
+        TodoUiItem(
             onCompleteClick = { id, isDone -> },
             onItemClicked = { },
             modifier = Modifier,
@@ -178,7 +179,7 @@ private fun ItemTodoListViewPreview() {
                 importance = TodoImportance.NORMAL,
                 deadline = null,
                 isDone = true,
-                creationDate = TaskDate(0)
+                creationDate = millisecondsToLocalDate(0L)
             ),
         )
     }
@@ -186,9 +187,9 @@ private fun ItemTodoListViewPreview() {
 
 @Preview
 @Composable
-private fun ItemTodoListViewPreviewDark() {
+private fun TodoUiItemPreviewDark() {
     AppTheme(darkTheme = true) {
-        ItemTodoListView(
+        TodoUiItem(
             onCompleteClick = { id, isDone -> },
             onItemClicked = { },
             modifier = Modifier,
@@ -198,9 +199,9 @@ private fun ItemTodoListViewPreviewDark() {
                 id = "test",
                 text = "Test testTest testTest testTest testTest testTest testTest test",
                 importance = TodoImportance.HIGH,
-                deadline = TaskDate(0L),
+                deadline = millisecondsToLocalDate(0L),
                 isDone = false,
-                creationDate = TaskDate(0)
+                creationDate = millisecondsToLocalDate(0L)
             ),
         )
     }

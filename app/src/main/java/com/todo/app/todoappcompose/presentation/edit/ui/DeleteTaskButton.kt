@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.edit.view
+package com.todo.app.todoappcompose.presentation.edit.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
