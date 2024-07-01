@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.home.view
+package com.todo.app.todoappcompose.presentation.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
 
 @Composable
-fun CreateTaskListItem(
+fun CreateTaskUiListItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -52,13 +52,13 @@ fun CreateTaskListItem(
 
 @Preview
 @Composable
-private fun CreateTaskListItemPrev() {
+private fun CreateTaskUiListItemPreview() {
     Column {
         AppTheme {
-            CreateTaskListItem({})
+            CreateTaskUiListItem({})
         }
         AppTheme(darkTheme = true) {
-            CreateTaskListItem({})
+            CreateTaskUiListItem({})
         }
     }
 }

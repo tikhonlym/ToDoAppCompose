@@ -1,13 +1,16 @@
 package com.todo.app.todoappcompose.presentation.util
 
-import java.util.Calendar
-import java.util.Date
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.UUID
 
 fun generateUniqueIdForTask(): String {
-    val currentDate = getCurrentDateTime().time
-    return currentDate.toByte().toString()
+    return UUID.randomUUID().toString()
 }
 
-fun getCurrentDateTime(): Date {
-    return Calendar.getInstance().time
+fun millisecondsToLocalDate(milliseconds: Long): LocalDate {
+    val instant = Instant.ofEpochMilli(milliseconds)
+    val zoneId = ZoneId.systemDefault()
+    return instant.atZone(zoneId).toLocalDate()
 }

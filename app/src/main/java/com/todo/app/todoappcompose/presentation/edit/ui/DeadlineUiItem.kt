@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.edit.view
+package com.todo.app.todoappcompose.presentation.edit.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -21,13 +21,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.presentation.util.millisecondsToLocalDate
+import java.time.LocalDate
 
 @Composable
-fun DeadLineView(
-    onDeadlineDate: (date: TaskDate?) -> Unit,
+fun DeadlineUiItem(
+    onDeadlineDate: (date: LocalDate?) -> Unit,
     modifier: Modifier = Modifier,
-    deadlineDate: TaskDate?,
+    deadlineDate: LocalDate?,
 ) {
     var dateDialogController by remember { mutableStateOf(false) }
 
@@ -94,15 +95,15 @@ fun DeadLineView(
 
 @Preview(showBackground = true)
 @Composable
-private fun DeadLineViewPreview() {
+private fun DeadlineUiItemPreview() {
     Column {
         AppTheme {
             Column {
-                DeadLineView(
+                DeadlineUiItem(
                     {}, deadlineDate = null
                 )
-                DeadLineView(
-                    {}, deadlineDate = TaskDate(0L)
+                DeadlineUiItem(
+                    {}, deadlineDate = millisecondsToLocalDate(0)
                 )
             }
         }

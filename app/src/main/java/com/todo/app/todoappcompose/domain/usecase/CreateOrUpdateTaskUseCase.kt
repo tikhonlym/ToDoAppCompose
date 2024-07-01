@@ -1,11 +1,11 @@
 package com.todo.app.todoappcompose.domain.usecase
 
+import com.todo.app.todoappcompose.data.repository.todo.TodoItemsRepositoryImpl
 import com.todo.app.todoappcompose.domain.objects.TodoItem
-import com.todo.app.todoappcompose.domain.repository.TodoItemsRepository
 import javax.inject.Inject
 
-class CreateOrUpdateTask @Inject constructor(
-    private val repository: TodoItemsRepository,
+class CreateOrUpdateTaskUseCase @Inject constructor(
+    private val repository: TodoItemsRepositoryImpl,
 ) {
 
     suspend fun execute(task: TodoItem) {

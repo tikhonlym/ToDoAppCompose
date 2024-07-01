@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.presentation.edit.view
+package com.todo.app.todoappcompose.presentation.edit.ui
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
@@ -13,14 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.presentation.util.millisecondsToLocalDate
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDatePickerDialog(
     onChangeController: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    onChangeDeadlineDate: (TaskDate) -> Unit,
+    onChangeDeadlineDate: (LocalDate) -> Unit,
 ) {
     val datePickerState = rememberDatePickerState()
     DatePickerDialog(
@@ -32,8 +33,9 @@ fun MyDatePickerDialog(
         confirmButton = {
             TextButton(onClick = {
                 onChangeController(false)
-                if (datePickerState.selectedDateMillis != null) {
-                    onChangeDeadlineDate(TaskDate(datePickerState.selectedDateMillis!!))
+                val date = datePickerState.selectedDateMillis
+                if (date != null) {
+                    onChangeDeadlineDate(millisecondsToLocalDate(date))
                 }
             }) {
                 Text(
