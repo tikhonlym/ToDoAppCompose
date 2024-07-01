@@ -1,5 +1,6 @@
 package com.todo.app.todoappcompose.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.todo.app.todoappcompose.domain.objects.TodoItem
@@ -7,10 +8,12 @@ import com.todo.app.todoappcompose.domain.usecase.CompleteTaskUseCase
 import com.todo.app.todoappcompose.domain.usecase.CountCompletedTaskUseCase
 import com.todo.app.todoappcompose.domain.usecase.GetTaskListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +32,12 @@ class HomeViewModel @Inject constructor(
     private val _showCompletedTasks = MutableStateFlow<Boolean>(false)
     val showCompletedTasks: StateFlow<Boolean> get() = _showCompletedTasks
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.e(TAG, "Caught by handler: $exception")
+    }
+
+    private val safeViewModelScope = viewModelScope + handler
+
     init {
         getTodoList()
     }
@@ -39,14 +48,14 @@ class HomeViewModel @Inject constructor(
 
     fun completeTask(id: String, isDone: Boolean) {
         // The demonstration of the success/errors requests will be added with the server
-        viewModelScope.launch {
+        safeViewModelScope.launch {
             completeTodoTaskUseCase.execute(id, isDone)
             getTodoList()
         }
     }
 
     fun countCompletedTask() {
-        viewModelScope.launch {
+        safeViewModelScope.launch {
             _countCompleted.update {
                 countCompletedTaskUseCase.execute()
             }
@@ -55,11 +64,15 @@ class HomeViewModel @Inject constructor(
 
     private fun getTodoList() {
         // The demonstration of the success/errors requests will be added with the server
-        viewModelScope.launch {
+        safeViewModelScope.launch {
             countCompletedTask()
             _todoList.update {
                 getTodoListUseCase.execute()
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "HomeViewModel"
     }
 }

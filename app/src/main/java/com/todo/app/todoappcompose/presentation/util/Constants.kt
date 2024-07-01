@@ -14,4 +14,6 @@ object Constants {
         creationDate = millisecondsToLocalDate(0L)
     )
 
+    const val DEFAULT_DATE_PATTERN = "dd MMMM yyyy"
+
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
+import com.todo.app.todoappcompose.presentation.util.formatToString
 import com.todo.app.todoappcompose.presentation.util.millisecondsToLocalDate
 import java.time.LocalDate
 
@@ -53,11 +54,13 @@ fun DeadlineUiItem(
                 style = AppTheme.typographyScheme.body
             )
             AnimatedVisibility(visible = deadlineDate != null) {
-                Text(
-                    text = deadlineDate.toString(),
-                    color = AppTheme.colorScheme.colorBlue,
-                    style = AppTheme.typographyScheme.subhead
-                )
+                deadlineDate?.let {
+                    Text(
+                        text = it.formatToString(),
+                        color = AppTheme.colorScheme.colorBlue,
+                        style = AppTheme.typographyScheme.subhead
+                    )
+                }
             }
         }
         Switch(

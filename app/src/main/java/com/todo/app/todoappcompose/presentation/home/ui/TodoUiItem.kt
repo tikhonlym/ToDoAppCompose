@@ -32,6 +32,7 @@ import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
 import com.todo.app.todoappcompose.domain.objects.TodoImportance
 import com.todo.app.todoappcompose.domain.objects.TodoItem
+import com.todo.app.todoappcompose.presentation.util.formatToString
 import com.todo.app.todoappcompose.presentation.util.millisecondsToLocalDate
 import java.time.LocalDate
 
@@ -155,7 +156,7 @@ private fun ItemText(
         AnimatedVisibility(visible = deadline != null && !completeState) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = deadline.toString(),
+                text = deadline!!.formatToString(),
                 style = AppTheme.typographyScheme.subhead,
                 color = AppTheme.colorScheme.labelTertiary
             )

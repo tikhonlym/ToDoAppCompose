@@ -1,5 +1,6 @@
 package com.todo.app.todoappcompose.presentation.edit
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.todo.app.todoappcompose.domain.objects.TodoItem
@@ -8,11 +9,13 @@ import com.todo.app.todoappcompose.domain.usecase.DeleteTaskUseCase
 import com.todo.app.todoappcompose.domain.usecase.GetTaskUseCase
 import com.todo.app.todoappcompose.presentation.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +34,12 @@ class EditViewModel @Inject constructor(
     private val _onDeleteButtonActive = MutableStateFlow<Boolean>(false)
     val onDeleteButtonActive: StateFlow<Boolean> get() = _onDeleteButtonActive
 
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        Log.e(TAG, "Caught by handler: $exception")
+    }
+
+    private val safeViewModelScope = viewModelScope + handler
+
     init {
         _uiState.update { EditScreenState.Loading }
     }
@@ -40,7 +49,7 @@ class EditViewModel @Inject constructor(
             _currentTask.update { Constants.emptyTask }
             initCreateNewTaskMode()
         } else {
-            viewModelScope.launch {
+            safeViewModelScope.launch {
                 delay(700L) // Implemented to demonstrate the work
                 _currentTask.update { getTaskUseCase.execute(id) }
                 initEditingMode()
@@ -50,14 +59,14 @@ class EditViewModel @Inject constructor(
 
     fun deleteTask(id: String) {
         // The demonstration of the success/errors requests will be added with the server
-        viewModelScope.launch {
+        safeViewModelScope.launch {
             deleteTaskUseCase.execute(id)
         }
     }
 
     fun createOrUpdateTask(task: TodoItem) {
         // The demonstration of the success/errors requests will be added with the server
-        viewModelScope.launch {
+        safeViewModelScope.launch {
             createOrUpdateTaskUseCase.execute(task)
         }
     }
@@ -70,6 +79,10 @@ class EditViewModel @Inject constructor(
     private fun initEditingMode() {
         _uiState.value = EditScreenState.Editing
         _onDeleteButtonActive.update { true }
+    }
+
+    companion object {
+        private const val TAG = "EditViewModel"
     }
 }
 
