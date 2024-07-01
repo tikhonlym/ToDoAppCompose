@@ -1,7 +1,16 @@
 package com.todo.app.todoappcompose.app.theme
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.todo.app.todoappcompose.app.theme.local.AppTypography
 
@@ -39,3 +48,21 @@ val typography = AppTypography(
         fontWeight = FontWeight.Normal
     )
 )
+
+@Preview(showBackground = true)
+@Composable
+private fun TypographyPreview() {
+    AppTheme {
+        Column(Modifier.padding(32.dp)) {
+            Text(text = "Large title — 32/38", style = AppTheme.typographyScheme.largeTitle)
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(text = "Title — 20/32", style = AppTheme.typographyScheme.title)
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(text = "BUTTON — 14/24", style = AppTheme.typographyScheme.button)
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(text = "Body — 16/20", style = AppTheme.typographyScheme.body)
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(text = "Subhead — 14/20", style = AppTheme.typographyScheme.subhead)
+        }
+    }
+}

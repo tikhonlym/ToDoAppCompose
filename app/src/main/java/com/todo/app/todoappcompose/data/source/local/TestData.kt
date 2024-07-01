@@ -1,8 +1,8 @@
-package com.todo.app.todoappcompose.data.repository.todo
+package com.todo.app.todoappcompose.data.source.local
 
-import com.todo.app.todoappcompose.data.objects.TaskDate
-import com.todo.app.todoappcompose.data.objects.TodoImportance
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.domain.objects.TodoImportance
+import com.todo.app.todoappcompose.domain.objects.TodoItem
 
 object TestData {
     // Test Data
@@ -20,6 +20,7 @@ object TestData {
             TodoImportance.NORMAL,
             isDone = false,
             creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "3",
@@ -33,7 +34,8 @@ object TestData {
             "Купить что-то, где-тоо точно чтобы показать как обр…",
             TodoImportance.NORMAL,
             isDone = false,
-            creationDate = TaskDate(10203L)
+            creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "5",
@@ -61,7 +63,8 @@ object TestData {
             "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обр…",
             TodoImportance.NORMAL,
             isDone = false,
-            creationDate = TaskDate(10203L)
+            creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "9",
@@ -83,6 +86,7 @@ object TestData {
             TodoImportance.NORMAL,
             isDone = false,
             creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "12",
@@ -104,6 +108,7 @@ object TestData {
             TodoImportance.LOW,
             isDone = true,
             creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "15",
@@ -125,6 +130,7 @@ object TestData {
             TodoImportance.LOW,
             isDone = true,
             creationDate = TaskDate(10203L),
+            deadline = TaskDate(0L)
         ),
         TodoItem(
             "18",

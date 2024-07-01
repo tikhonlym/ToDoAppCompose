@@ -4,9 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,11 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.app.todoappcompose.R
 import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.data.objects.TodoImportance
-import com.todo.app.todoappcompose.data.objects.TodoItem
+import com.todo.app.todoappcompose.domain.objects.TaskDate
+import com.todo.app.todoappcompose.domain.objects.TodoImportance
+import com.todo.app.todoappcompose.domain.objects.TodoItem
 
 @Composable
 fun ItemTodoListView(
@@ -103,22 +107,12 @@ fun ItemTodoListView(
                     )
                     Spacer(modifier = Modifier.width(3.dp))
                 }
-                Text(
-                    modifier = Modifier
-                        .padding(end = 36.dp, top = 2.dp),
+
+                ItemText(
+                    completeState = completeState,
+                    modifier = Modifier.padding(end = 36.dp, top = 2.dp),
                     text = data.text,
-                    color = if (completeState) {
-                        AppTheme.colorScheme.labelTertiary
-                    } else {
-                        AppTheme.colorScheme.labelPrimary
-                    },
-                    style = if (completeState) {
-                        AppTheme.typographyScheme.body.copy(textDecoration = TextDecoration.LineThrough)
-                    } else {
-                        AppTheme.typographyScheme.body
-                    },
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
+                    deadline = data.deadline
                 )
             }
             Icon(
@@ -130,5 +124,84 @@ fun ItemTodoListView(
                 tint = AppTheme.colorScheme.labelTertiary
             )
         }
+    }
+}
+
+@Composable
+private fun ItemText(
+    completeState: Boolean,
+    modifier: Modifier = Modifier,
+    text: String,
+    deadline: TaskDate?,
+) {
+    Column {
+        Text(
+            modifier = modifier,
+            text = text,
+            color = if (completeState) {
+                AppTheme.colorScheme.labelTertiary
+            } else {
+                AppTheme.colorScheme.labelPrimary
+            },
+            style = if (completeState) {
+                AppTheme.typographyScheme.body.copy(textDecoration = TextDecoration.LineThrough)
+            } else {
+                AppTheme.typographyScheme.body
+            },
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis
+        )
+        AnimatedVisibility(visible = deadline != null && !completeState) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = deadline.toString(),
+                style = AppTheme.typographyScheme.subhead,
+                color = AppTheme.colorScheme.labelTertiary
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ItemTodoListViewPreview() {
+    AppTheme() {
+        ItemTodoListView(
+            onCompleteClick = { id, isDone -> },
+            onItemClicked = { },
+            modifier = Modifier,
+            enabled = false,
+            showCompletedTasks = true,
+            data = TodoItem(
+                id = "test",
+                text = "Test testTest testTest testTest testTest testTest testTest test",
+                importance = TodoImportance.NORMAL,
+                deadline = null,
+                isDone = true,
+                creationDate = TaskDate(0)
+            ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ItemTodoListViewPreviewDark() {
+    AppTheme(darkTheme = true) {
+        ItemTodoListView(
+            onCompleteClick = { id, isDone -> },
+            onItemClicked = { },
+            modifier = Modifier,
+            enabled = false,
+            showCompletedTasks = true,
+            data = TodoItem(
+                id = "test",
+                text = "Test testTest testTest testTest testTest testTest testTest test",
+                importance = TodoImportance.HIGH,
+                deadline = TaskDate(0L),
+                isDone = false,
+                creationDate = TaskDate(0)
+            ),
+        )
     }
 }

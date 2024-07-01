@@ -7,7 +7,7 @@ class DeleteTask @Inject constructor(
     private val repository: TodoItemsRepository,
 ) {
 
-    fun execute(id: String) {
+    suspend fun execute(id: String) {
         repository.deleteTask(id)
     }
 }

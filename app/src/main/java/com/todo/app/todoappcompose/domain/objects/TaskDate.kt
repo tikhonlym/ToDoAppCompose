@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.data.objects
+package com.todo.app.todoappcompose.domain.objects
 
 import java.text.SimpleDateFormat
 import java.util.Date
