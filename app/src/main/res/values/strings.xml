@@ -14,5 +14,7 @@
     <string name="done_txt">"ГОТОВО"</string>
     <string name="cancel_txt">"ОТМЕНА"</string>
     <string name="hint_text_your">"Ваш текст"</string>
-    <string name="no_description">"Нет описания"</string>
+    <string name="no_description">"Пустой черновик"</string>
+    <string name="txt_offline">"offline"</string>
+    <string name="txt_sync_needed">"Необходима\nсихронизация"</string>
 </resources>
