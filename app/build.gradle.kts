@@ -42,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -54,17 +55,30 @@ android {
 }
 
 dependencies {
+
     implementation(kotlin("reflect"))
 
-    //Dagger Hilt
+    // Dagger-Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // Retrofit okhttp
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit2.kotlin.coroutines.adapter)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
     // Compose type-safe navigation
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(libs.androidx.material)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
