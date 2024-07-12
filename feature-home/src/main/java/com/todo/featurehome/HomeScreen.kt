@@ -31,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -208,7 +209,6 @@ private fun HomeScreenComponent(
     )
 
     LazyColumn(state = listState) {
-
         item {
             ExpandedToolbar(
                 onSwitch = { show ->
@@ -220,7 +220,9 @@ private fun HomeScreenComponent(
             )
         }
 
-        items(count = todoList.value.size) { index ->
+        items(count = todoList.value.size, key = {
+            todoList.value[it].id
+        }) { index ->
             val curItem = todoList.value[index]
             TodoUiItem(
                 onCompleteClick = { task, isDone ->
