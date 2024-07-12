@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.ui
+package com.todo.app.todoappcompose
 
 import android.content.Context
 import android.os.Bundle
@@ -13,12 +13,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.todo.app.todoappcompose.app.theme.AppTheme
-import com.todo.app.todoappcompose.ui.edit.EditScreen
-import com.todo.app.todoappcompose.ui.edit.EditScreenDestination
-import com.todo.app.todoappcompose.ui.home.HomeScreen
-import com.todo.app.todoappcompose.ui.home.HomeScreenDestination
-import com.todo.app.todoappcompose.ui.home.HomeViewModel
+import com.todo.core.callback.NetworkStatusCallback
+import com.todo.core.navigation.EditScreenDestination
+import com.todo.core.navigation.HomeScreenDestination
+import com.todo.core.theme.AppTheme
+import com.todo.featureedit.EditScreen
+import com.todo.featurehome.HomeScreen
+import com.todo.featurehome.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

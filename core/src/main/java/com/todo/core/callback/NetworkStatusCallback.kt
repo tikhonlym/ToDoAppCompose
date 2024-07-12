@@ -1,4 +1,4 @@
-package com.todo.app.todoappcompose.ui
+package com.todo.core.callback
 
 import android.content.Context
 import android.net.ConnectivityManager
