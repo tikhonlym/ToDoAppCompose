@@ -41,7 +41,7 @@ object RetrofitFactory {
                 .header("accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("X-Generate-Fails:", "0")
-                .header("Authorization", "Bearer ...")
+                .header("Authorization", "Bearer Elbereth")
             it.proceed(request.build())
         }
         .build()

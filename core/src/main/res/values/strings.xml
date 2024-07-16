@@ -17,4 +17,9 @@
     <string name="no_description">"Пустой черновик"</string>
     <string name="txt_offline">"offline"</string>
     <string name="txt_sync_needed">"Необходима\nсихронизация"</string>
+    <string name="settings_title">"НАСТРОЙКИ"</string>
+    <string name="app_theme_title">"Тема приложения:"</string>
+    <string name="like_in_system">"Как в системе"</string>
+    <string name="always_dark">"Всегда тёмная"</string>
+    <string name="always_light">"Всегда светлая"</string>
 </resources>

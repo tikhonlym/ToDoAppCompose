@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature-edit" />
             <option value="$PROJECT_DIR$/feature-home" />
+            <option value="$PROJECT_DIR$/feature-settings" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

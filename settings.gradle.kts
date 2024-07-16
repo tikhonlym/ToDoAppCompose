@@ -22,3 +22,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":feature-settings")

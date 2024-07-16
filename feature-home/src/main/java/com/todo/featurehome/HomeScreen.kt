@@ -31,7 +31,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,6 +53,7 @@ import com.todo.core.theme.shimmerBackground
 import com.todo.featurehome.items.CreateTaskUiListItem
 import com.todo.featurehome.items.InternetStatusUiItem
 import com.todo.featurehome.items.NewTaskFloatingButton
+import com.todo.featurehome.items.SettingsButton
 import com.todo.featurehome.items.SwitchVisibilityButton
 import com.todo.featurehome.items.SyncButton
 import com.todo.featurehome.items.TodoUiItem
@@ -64,6 +64,7 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     viewModel: HomeViewModel,
     onNavigateToEditScreen: (String?) -> Unit,
+    onNavigateToSettings: () -> Unit,
     networkStatusCallback: NetworkStatusCallback,
 ) {
 
@@ -113,7 +114,12 @@ fun HomeScreen(
                     }
                 }
 
-                HomeScreenComponent(onNavigateToEditScreen, viewModel, networkStatusCallback)
+                HomeScreenComponent(
+                    onNavigateToEditScreen,
+                    onNavigateToSettings,
+                    viewModel,
+                    networkStatusCallback
+                )
 
                 Column(
                     Modifier
@@ -134,7 +140,9 @@ fun HomeScreen(
                             viewModel.refreshList()
                         }
                     }
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     NewTaskFloatingButton(
                         onNewTask = {
                             onNavigateToEditScreen(null)
@@ -179,6 +187,7 @@ fun ShowCustomSnackBar(
 @Composable
 private fun HomeScreenComponent(
     onNavigateToEditScreen: (String?) -> Unit,
+    onNavigateToSettings: () -> Unit,
     viewModel: HomeViewModel,
     networkStatusCallback: NetworkStatusCallback,
 ) {
@@ -203,6 +212,7 @@ private fun HomeScreenComponent(
     var onTaskClickEnabled by remember { mutableStateOf(true) }
 
     CollapsedTopBar(
+        onNavigateToSettings = onNavigateToSettings,
         modifier = Modifier.zIndex(2f),
         isCollapsed = isCollapsed,
         internetWorking = isNetworkAvailable
@@ -211,6 +221,7 @@ private fun HomeScreenComponent(
     LazyColumn(state = listState) {
         item {
             ExpandedToolbar(
+                onNavigateToSettings = onNavigateToSettings,
                 onSwitch = { show ->
                     viewModel.showCompletedTasks(show)
                 },
@@ -302,6 +313,7 @@ private val COLLAPSED_TOP_BAR_HEIGHT = 56.dp
 
 @Composable
 private fun ExpandedToolbar(
+    onNavigateToSettings: () -> Unit,
     onSwitch: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     countCompleted: Int,
@@ -323,6 +335,15 @@ private fun ExpandedToolbar(
             )
             Spacer(modifier = Modifier.width(16.dp))
             InternetStatusUiItem(internetWorking = internetWorking)
+
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Row(modifier = Modifier.align(Alignment.CenterEnd)) {
+                    SettingsButton(
+                        onNavigateToSettingsScreen = onNavigateToSettings
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                }
+            }
         }
         Spacer(modifier = Modifier.height(4.dp))
         Row(
@@ -351,6 +372,7 @@ private fun ExpandedToolbar(
 
 @Composable
 private fun CollapsedTopBar(
+    onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier,
     isCollapsed: Boolean,
     internetWorking: Boolean,
@@ -365,22 +387,30 @@ private fun CollapsedTopBar(
             .height(COLLAPSED_TOP_BAR_HEIGHT),
     ) {
         AnimatedVisibility(visible = isCollapsed) {
-            Column(Modifier.fillMaxWidth()) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = Modifier.padding(16.dp),
-                        text = stringResource(id = R.string.my_tasks_title),
-                        color = AppTheme.colorScheme.labelPrimary,
-                        style = AppTheme.typographyScheme.title,
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Column(Modifier.fillMaxWidth()) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(16.dp),
+                            text = stringResource(id = R.string.my_tasks_title),
+                            color = AppTheme.colorScheme.labelPrimary,
+                            style = AppTheme.typographyScheme.title,
+                        )
+                        InternetStatusUiItem(internetWorking = internetWorking)
+                    }
+                    HorizontalDivider(
+                        modifier = Modifier.shadow(elevation = 4.dp),
+                        color = AppTheme.colorScheme.supportSeparator
                     )
-                    InternetStatusUiItem(internetWorking = internetWorking)
                 }
-                HorizontalDivider(
-                    modifier = Modifier.shadow(elevation = 4.dp),
-                    color = AppTheme.colorScheme.supportSeparator
-                )
+                Row(modifier = Modifier.align(Alignment.CenterEnd)) {
+                    SettingsButton(
+                        onNavigateToSettingsScreen = { onNavigateToSettings.invoke() }
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                }
             }
         }
     }
@@ -390,6 +420,6 @@ private fun CollapsedTopBar(
 @Composable
 private fun CollapsedTopBarPreview() {
     AppTheme {
-        CollapsedTopBar(isCollapsed = true, internetWorking = false)
+        CollapsedTopBar(onNavigateToSettings = {}, isCollapsed = true, internetWorking = false)
     }
 }
