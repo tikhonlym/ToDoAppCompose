@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.0"
+animation = "1.6.8"
 converterGson = "2.9.0"
 hiltAndroid = "2.48"
 kotlin = "1.9.0"
@@ -24,6 +25,7 @@ materialVersion = "1.12.0"
 
 [libraries]
 agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp"}
+androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

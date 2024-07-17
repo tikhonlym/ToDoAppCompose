@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,7 +25,7 @@ fun SettingsToolBar(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var onClickEnabled by remember { mutableStateOf(true) }
+    val onClickEnabled = remember { mutableStateOf(true) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -40,12 +38,12 @@ fun SettingsToolBar(
             modifier = Modifier
                 .size(24.dp)
                 .clickable(
-                    enabled = onClickEnabled,
+                    enabled = onClickEnabled.value,
                     interactionSource = null,
                     indication = null
                 ) {
-                    onClose.invoke()
-                    onClickEnabled = false
+                    onClickEnabled.value = false
+                    onClose()
                 },
             tint = AppTheme.colorScheme.labelPrimary,
             painter = painterResource(R.drawable.ic_arrow_back_24),

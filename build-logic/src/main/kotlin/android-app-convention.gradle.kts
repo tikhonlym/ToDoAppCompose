@@ -28,6 +28,7 @@ configure<BaseAppModuleExtension> {
 }
 
 dependencies {
+    implementation(libs.androidx.animation)
     implementation(libs.androidx.material)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
