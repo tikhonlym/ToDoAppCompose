@@ -113,10 +113,14 @@ private fun ThemeSelectionUIItem(
             onCheckedChange = {
                 onChangeTheme.invoke()
             },
-            colors = CheckboxDefaults.colors(
+            colors = if (checked) CheckboxDefaults.colors(
                 checkedColor = AppTheme.colorScheme.colorGreen,
                 checkmarkColor = AppTheme.colorScheme.backSecondary,
-            )
+            ) else {
+                CheckboxDefaults.colors(
+                    uncheckedColor = AppTheme.colorScheme.supportSeparator
+                )
+            }
         )
         Text(
             text = text,

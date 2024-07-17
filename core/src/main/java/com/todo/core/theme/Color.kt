@@ -1,5 +1,7 @@
 package com.todo.core.theme
 
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import com.todo.core.theme.local.AppColorScheme
 
@@ -41,6 +43,41 @@ val BackPrimaryDark = Color(0xFF161618)
 val BackSecondaryDark = Color(0xFF252528)
 val BackElevatedDark = Color(0xFF3C3C3F)
 
+
+private val lightMaterialColors = lightColorScheme(
+    primary = BackPrimary,
+    onPrimary = BackSecondary,
+    primaryContainer = BackSecondary,
+    onPrimaryContainer = BackSecondary,
+    secondary = BackSecondary,
+    onSecondary = BackSecondary,
+    secondaryContainer = BackSecondary,
+    onSecondaryContainer = BackSecondary,
+    error = ColorRed,
+    onError = ColorRed,
+    background = BackPrimary,
+    onBackground = LabelPrimary,
+    surface = BackSecondary,
+    onSurface = LabelSecondary
+)
+
+private val darkMaterialColors = darkColorScheme(
+    primary = BackPrimaryDark,
+    onPrimary = BackSecondaryDark,
+    primaryContainer = BackSecondaryDark,
+    onPrimaryContainer = BackSecondaryDark,
+    secondary = BackSecondaryDark,
+    onSecondary = BackSecondaryDark,
+    secondaryContainer = BackSecondaryDark,
+    onSecondaryContainer = BackSecondaryDark,
+    error = ColorRedDark,
+    onError = ColorRedDark,
+    background = BackPrimaryDark,
+    onBackground = LabelPrimaryDark,
+    surface = BackSecondaryDark,
+    onSurface = LabelSecondaryDark
+)
+
 val darkColorScheme = AppColorScheme(
     supportSeparator = SupportSeparatorDark,
     supportOverlay = SupportOverlayDark,
@@ -59,6 +96,7 @@ val darkColorScheme = AppColorScheme(
     backPrimary = BackPrimaryDark,
     backSecondary = BackSecondaryDark,
     backElevated = BackElevatedDark,
+    materialColors = darkMaterialColors
 )
 
 val lightColorScheme = AppColorScheme(
@@ -79,4 +117,5 @@ val lightColorScheme = AppColorScheme(
     backPrimary = BackPrimary,
     backSecondary = BackSecondary,
     backElevated = BackElevated,
+    materialColors = lightMaterialColors
 )

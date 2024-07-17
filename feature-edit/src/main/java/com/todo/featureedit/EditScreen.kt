@@ -41,9 +41,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.todo.featureedit.components.ChangeImportanceUiItem
-import com.todo.featureedit.components.DeadlineUiItem
-import com.todo.featureedit.components.DeleteTaskButton
 import com.todo.core.R
 import com.todo.core.formatToMillis
 import com.todo.core.generateUniqueIdForTask
@@ -53,6 +50,9 @@ import com.todo.core.theme.AppTheme
 import com.todo.core.theme.component.CircleLoader
 import com.todo.core.theme.component.StrokeStyle
 import com.todo.core.theme.shimmerBackground
+import com.todo.featureedit.components.ChangeImportanceUiItem
+import com.todo.featureedit.components.DeadlineUiItem
+import com.todo.featureedit.components.DeleteTaskButton
 import java.time.LocalDate
 
 @Composable
@@ -244,6 +244,7 @@ fun EditScreenComponent(
                     .verticalScroll(rememberScrollState())
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
+
                 BasicTextField(
                     modifier = Modifier
                         .defaultMinSize(minHeight = 100.dp)
@@ -259,7 +260,6 @@ fun EditScreenComponent(
                                 .padding(16.dp)
                                 .fillMaxWidth()
                         ) {
-
                             if (textFieldValue.text.isEmpty()) {
                                 Text(
                                     text = stringResource(R.string.hint_text_your),
