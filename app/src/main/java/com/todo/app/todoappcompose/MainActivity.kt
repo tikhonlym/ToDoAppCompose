@@ -1,6 +1,7 @@
 package com.todo.app.todoappcompose
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,22 +39,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
             val themeState = themeConfig.appThemeMode.collectAsState()
-
             AppTheme(
                 darkTheme = when (themeState.value) {
-                    AppThemeMode.ALWAYS_DARK -> {
-                        true
-                    }
-
-                    AppThemeMode.ALWAYS_LIGHT -> {
-                        false
-                    }
-
-                    else -> {
-                        isSystemInDarkTheme()
-                    }
+                    AppThemeMode.ALWAYS_DARK -> true
+                    AppThemeMode.ALWAYS_LIGHT -> false
+                    else -> isSystemInDarkTheme()
                 }
             ) {
                 MainScreenApp(this)
