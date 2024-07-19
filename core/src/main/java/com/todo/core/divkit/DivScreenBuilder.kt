@@ -10,11 +10,6 @@ import com.todo.core.util.AssetReader
 import com.yandex.div.core.Div2Context
 import com.yandex.div.core.DivConfiguration
 import com.yandex.div.picasso.PicassoDivImageLoader
-import com.yandex.div.rive.OkHttpDivRiveNetworkDelegate
-import com.yandex.div.rive.RiveCustomViewAdapter
-import com.yandex.div.zoom.DivPinchToZoomConfiguration
-import com.yandex.div.zoom.DivPinchToZoomExtensionHandler
-import okhttp3.OkHttpClient
 
 
 class DivScreenBuilder(
@@ -48,18 +43,6 @@ class DivScreenBuilder(
     private fun createDivConfiguration(): DivConfiguration {
         return DivConfiguration.Builder(PicassoDivImageLoader(activity.baseContext))
             .actionHandler(DivActionHandler(actionController))
-            .extension(
-                DivPinchToZoomExtensionHandler(
-                    DivPinchToZoomConfiguration.Builder(activity).build()
-                )
-            )
-            .divCustomContainerViewAdapter(
-                RiveCustomViewAdapter.Builder(
-                    activity.baseContext, OkHttpDivRiveNetworkDelegate(
-                        OkHttpClient.Builder().build()
-                    )
-                ).build()
-            )
             .visualErrorsEnabled(true)
             .build()
     }

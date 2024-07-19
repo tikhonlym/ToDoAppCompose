@@ -29,8 +29,6 @@ dependencies {
     implementation(libs.div.json)
     implementation(libs.utils)
     implementation(libs.picasso)
-    implementation(libs.div.rive)
-    implementation(libs.div.pinch.to.zoom)
 
     implementation(libs.androidx.material)
     implementation(libs.androidx.core.ktx)
