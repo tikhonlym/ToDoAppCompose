@@ -32,12 +32,6 @@ configure<BaseAppModuleExtension> {
 dependencies {
 
     implementation(libs.div.core)
-    implementation(libs.div)
-    implementation(libs.div.json)
-    implementation(libs.utils)
-    implementation(libs.picasso)
-    implementation(libs.div.rive)
-    implementation(libs.div.pinch.to.zoom)
 
     implementation(libs.androidx.animation)
     implementation(libs.androidx.material)
