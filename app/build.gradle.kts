@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(project(":feature-edit"))
+    implementation(project(":feature-about"))
     implementation(project(":feature-home"))
     implementation(project(":feature-settings"))
     implementation(project(":core"))

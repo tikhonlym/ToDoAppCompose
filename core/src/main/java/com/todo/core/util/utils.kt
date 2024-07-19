@@ -1,4 +1,4 @@
-package com.todo.core
+package com.todo.core.util
 
 import android.os.Build
 import java.time.Instant

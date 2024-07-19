@@ -23,3 +23,4 @@ dependencyResolutionManagement {
     }
 }
 include(":feature-settings")
+include(":feature-about")

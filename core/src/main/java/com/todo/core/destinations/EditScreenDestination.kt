@@ -1,4 +1,4 @@
-package com.todo.core.navigation
+package com.todo.core.destinations
 
 import kotlinx.serialization.Serializable
 

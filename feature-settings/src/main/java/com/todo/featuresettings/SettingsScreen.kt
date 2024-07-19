@@ -26,11 +26,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.core.R
 import com.todo.core.config.theme.AppThemeMode
 import com.todo.core.theme.AppTheme
+import com.todo.featuresettings.components.AboutUiItem
 import com.todo.featuresettings.components.SettingsToolBar
 
 @Composable
 fun SettingsScreen(
     onNavigateUp: () -> Unit,
+    onNavigateToAbout: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     Column(
@@ -47,7 +49,7 @@ fun SettingsScreen(
 
         Column(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp)
                 .background(
                     shape = RoundedCornerShape(8.dp),
                     color = AppTheme.colorScheme.backSecondary
@@ -92,7 +94,20 @@ fun SettingsScreen(
                     checked = selectedOption.value == AppThemeMode.ALWAYS_LIGHT
                 )
             }
+        }
 
+        Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            HorizontalDivider(color = AppTheme.colorScheme.supportSeparator)
+
+            AboutUiItem(
+                onClick = {
+                    onNavigateToAbout()
+                },
+            )
+
+            HorizontalDivider(color = AppTheme.colorScheme.supportSeparator)
         }
     }
 }
@@ -134,6 +149,6 @@ private fun ThemeSelectionUIItem(
 @Composable
 private fun SettingsScreenPreview() {
     AppTheme {
-        SettingsScreen({})
+        SettingsScreen({}, {})
     }
 }

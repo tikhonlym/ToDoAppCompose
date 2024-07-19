@@ -53,10 +53,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.core.R
-import com.todo.core.formatToMillis
-import com.todo.core.generateUniqueIdForTask
-import com.todo.core.getDeviceName
-import com.todo.core.millisecondsToLocalDate
+import com.todo.core.util.formatToMillis
+import com.todo.core.util.generateUniqueIdForTask
+import com.todo.core.util.getDeviceName
+import com.todo.core.util.millisecondsToLocalDate
 import com.todo.core.theme.AppTheme
 import com.todo.core.theme.component.CircleLoader
 import com.todo.core.theme.component.StrokeStyle

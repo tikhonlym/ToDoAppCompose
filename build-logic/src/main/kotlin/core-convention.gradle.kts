@@ -18,9 +18,19 @@ android {
 
 dependencies {
 
+    implementation(libs.okhttp)
+
     // Compose type-safe navigation
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.div.core)
+    implementation(libs.div)
+    implementation(libs.div.json)
+    implementation(libs.utils)
+    implementation(libs.picasso)
+    implementation(libs.div.rive)
+    implementation(libs.div.pinch.to.zoom)
 
     implementation(libs.androidx.material)
     implementation(libs.androidx.core.ktx)
