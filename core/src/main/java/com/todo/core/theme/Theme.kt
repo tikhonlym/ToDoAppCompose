@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -36,7 +37,12 @@ fun AppTheme(
         LocalAppColorScheme provides colorScheme,
         LocalAppTypography provides typography,
         LocalIndication provides rippleIndication,
-        content = content
+        content = {
+            MaterialTheme(
+                colorScheme = colorScheme.materialColors,
+                content = content
+            )
+        }
     )
 }
 

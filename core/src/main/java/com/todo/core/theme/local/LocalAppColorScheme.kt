@@ -1,5 +1,7 @@
 package com.todo.core.theme.local
 
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
@@ -21,6 +23,7 @@ data class AppColorScheme(
     val backPrimary: Color,
     val backSecondary: Color,
     val backElevated: Color,
+    val materialColors: ColorScheme
 )
 
 val LocalAppColorScheme = staticCompositionLocalOf {
@@ -41,6 +44,24 @@ val LocalAppColorScheme = staticCompositionLocalOf {
         colorWhite = Color.Unspecified,
         backPrimary = Color.Unspecified,
         backSecondary = Color.Unspecified,
-        backElevated = Color.Unspecified
+        backElevated = Color.Unspecified,
+        materialColors = defaultMaterialColors
     )
 }
+
+val defaultMaterialColors = lightColorScheme(
+    primary = Color.Unspecified,
+    onPrimary = Color.Unspecified,
+    primaryContainer = Color.Unspecified,
+    onPrimaryContainer = Color.Unspecified,
+    secondary = Color.Unspecified,
+    onSecondary = Color.Unspecified,
+    secondaryContainer = Color.Unspecified,
+    onSecondaryContainer = Color.Unspecified,
+    error = Color.Unspecified,
+    onError = Color.Unspecified,
+    background = Color.Unspecified,
+    onBackground = Color.Unspecified,
+    surface = Color.Unspecified,
+    onSurface = Color.Unspecified
+)

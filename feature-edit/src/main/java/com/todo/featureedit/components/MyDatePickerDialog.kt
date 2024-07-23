@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.core.R
-import com.todo.core.millisecondsToLocalDate
+import com.todo.core.util.millisecondsToLocalDate
 import com.todo.core.theme.AppTheme
 import java.time.LocalDate
 

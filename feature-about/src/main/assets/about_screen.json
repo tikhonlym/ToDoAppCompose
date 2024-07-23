@@ -1,0 +1,233 @@
+{
+  "card": {
+    "log_id": "div2_sample_card",
+    "states": [
+      {
+        "state_id": 0,
+        "div": {
+          "type": "container",
+          "orientation": "vertical",
+          "background": [
+            {
+              "type": "solid",
+              "color": "#161618"
+            }
+          ],
+          "height": {
+            "type": "match_parent"
+          },
+          "items": [
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "background": [
+                {
+                  "type": "solid",
+                  "color": "#161618"
+                }
+              ],
+              "paddings": {
+                "top": 16,
+                "bottom": 16,
+                "start": 16,
+                "end": 16
+              },
+              "items": [
+                {
+                  "type": "image",
+                  "tint_color": "#FFFFFF",
+                  "width": {
+                    "type": "fixed",
+                    "value": 24
+                  },
+                  "image_url": "https://post-images.org/download/83.220.185.61-desk/ic_back_24_2.png",
+                  "action":{
+                    "log_id": "navigate_up",
+                    "url": "div-action://navigate_up"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "width": {
+                "type": "match_parent",
+                "weight": 1
+              },
+              "height": {
+                "type": "fixed",
+                "value": 1
+              },
+              "border": {
+                "stroke": {
+                  "color": "#33FFFFFF",
+                  "width": 1
+                },
+                "shadow": {
+                  "offset": {
+                    "y": {
+                      "value": 2
+                    },
+                    "x": {
+                      "value": 0
+                    }
+                  },
+                  "color": "#000000"
+                },
+                "has_shadow": true
+              }
+            },
+            {
+              "type": "container",
+              "paddings": {
+                "top": 16,
+                "start": 16,
+                "end": 16,
+                "bottom": 0
+              },
+              "items": [
+                {
+                  "type": "text",
+                  "text": "О приложении:",
+                  "text_color": "#ffffff",
+                  "font_size": 20
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "background": [
+                {
+                  "type": "solid",
+                  "color": "#252528"
+                }
+              ],
+              "margins": {
+                "top": 16,
+                "start": 16,
+                "end": 16,
+                "bottom": 16
+              },
+              "border": {
+                "corner_radius": 16,
+                "shadow": {
+                  "offset": {
+                    "x": {
+                      "value": 1
+                    },
+                    "y": {
+                      "value": 3
+                    }
+                  },
+                  "color": "#000"
+                },
+                "has_shadow": true
+              },
+              "items": [
+                {
+                  "type": "image",
+                  "image_url": "https://play-lh.googleusercontent.com/BtlDrUn1fZogAVBdOJrxEg-uRqocsipx5I2VoVSYtNfD3zgYSHYN2mwUbvPfDRwEowE",
+                  "width": {
+                    "type": "fixed",
+                    "value": 100
+                  }
+                },
+                {
+                  "type": "state",
+                  "id": "description_state",
+                  "default_state_id": "small_description",
+                  "states": [
+                    {
+                      "state_id": "small_description",
+                      "div": {
+                        "type": "text",
+                        "text": "ToDo — это простое и удобное приложение для управления задачами.",
+                        "text_color": "#ffffff",
+                        "font_size": 16,
+                        "height": {
+                          "type": "match_parent"
+                        },
+                        "paddings": {
+                          "top": 8,
+                          "start": 16,
+                          "end": 16,
+                          "bottom": 8
+                        },
+                        "actions": [
+                          {
+                            "log_id": "set_big_description",
+                            "url": "div-action://set_state?state_id=0/description_state/big_description"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "state_id": "big_description",
+                      "div": {
+                        "type": "text",
+                        "text": "ToDo — это простое и удобное приложение для управления задачами, позволяющее пользователям создавать, редактировать и отслеживать свои дела. Оно помогает организовать ежедневные дела, повысить продуктивность и не забыть важные задачи. Приложение также предоставляет напоминания и возможность приоритизировать задачи для более эффективного планирования.",
+                        "text_color": "#ffffff",
+                        "font_size": 16,
+                        "height": {
+                          "type": "match_parent"
+                        },
+                        "paddings": {
+                          "top": 8,
+                          "start": 16,
+                          "end": 16,
+                          "bottom": 8
+                        },
+                        "actions": [
+                          {
+                            "log_id": "set_small_description",
+                            "url": "div-action://set_state?state_id=0/description_state/small_description"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "container",
+              "orientation": "horizontal",
+              "width": {
+                "type": "match_parent",
+                "weight": 1
+              },
+              "height": {
+                "type": "fixed",
+                "value": 1
+              },
+              "margins": {
+                "start": 16,
+                "end": 16
+              },
+              "border": {
+                "stroke": {
+                  "color": "#33FFFFFF",
+                  "width": 1
+                },
+                "shadow": {
+                  "offset": {
+                    "y": {
+                      "value": 2
+                    },
+                    "x": {
+                      "value": 0
+                    }
+                  },
+                  "color": "#000000"
+                },
+                "has_shadow": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

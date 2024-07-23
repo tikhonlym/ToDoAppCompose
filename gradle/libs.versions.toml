@@ -1,6 +1,8 @@
 [versions]
 agp = "8.3.0"
+animation = "1.6.8"
 converterGson = "2.9.0"
+divkit = "30.9.0"
 hiltAndroid = "2.48"
 kotlin = "1.9.0"
 coroutines = "1.7.3"
@@ -24,6 +26,16 @@ materialVersion = "1.12.0"
 
 [libraries]
 agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp"}
+androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
+
+div-core = { module = "com.yandex.div:div-core", version.ref = "divkit" }
+div = { module = "com.yandex.div:div", version.ref = "divkit" }
+div-json = { module = "com.yandex.div:div-json", version.ref = "divkit" }
+picasso = { module = "com.yandex.div:picasso", version.ref = "divkit" }
+div-rive = { module = "com.yandex.div:div-rive", version.ref = "divkit" }
+utils = { module = "com.yandex.div:utils", version.ref = "divkit" }
+div-pinch-to-zoom = { module = "com.yandex.div:div-pinch-to-zoom", version.ref = "divkit" }
+
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

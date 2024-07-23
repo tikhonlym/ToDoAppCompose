@@ -5,11 +5,12 @@ plugins {
 }
 
 tgReportPlugin {
-    token.set(providers.gradleProperty("TG_TOKEN"))
-    chatId.set(providers.gradleProperty("TG_CHAT"))
-    maxSizeMb.set(providers.gradleProperty("APK_MAX_SIZE").map { it.toInt() })
-    sizeValidationEnabled.set(providers.gradleProperty("SIZE_VALIDATION_ENABLED").map { it.toBoolean() })
-    apkAnalyzeEnabled.set(providers.gradleProperty("APK_ANALYZE_ENABLED").map { it.toBoolean() })
+    token.set(providers.environmentVariable("TG_TOKEN"))
+    chatId.set(providers.environmentVariable("TG_CHAT"))
+
+    maxSizeMb.set(20)
+    sizeValidationEnabled.set(true)
+    apkAnalyzeEnabled.set(true)
 }
 
 android {
@@ -28,7 +29,9 @@ android {
 
 dependencies {
     implementation(project(":feature-edit"))
+    implementation(project(":feature-about"))
     implementation(project(":feature-home"))
+    implementation(project(":feature-settings"))
     implementation(project(":core"))
     implementation(project(":data"))
 }

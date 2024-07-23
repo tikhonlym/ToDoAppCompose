@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import gradle.kotlin.dsl.accessors._380da2512753b993b0f2aa2d02a83f4e.implementation
 
 plugins {
     id("com.android.application")
@@ -21,6 +22,7 @@ configure<BaseAppModuleExtension> {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -28,6 +30,10 @@ configure<BaseAppModuleExtension> {
 }
 
 dependencies {
+
+    implementation(libs.div.core)
+
+    implementation(libs.androidx.animation)
     implementation(libs.androidx.material)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

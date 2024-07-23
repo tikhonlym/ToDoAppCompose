@@ -20,8 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.core.R
-import com.todo.core.formatToString
-import com.todo.core.millisecondsToLocalDate
+import com.todo.core.util.formatToString
+import com.todo.core.util.millisecondsToLocalDate
 import com.todo.core.theme.AppTheme
 import java.time.LocalDate
 

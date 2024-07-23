@@ -3,7 +3,7 @@ package com.todo.featurehome
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.todo.core.getDeviceName
+import com.todo.core.util.getDeviceName
 import com.todo.core.theme.component.SnackBarData
 import com.todo.domain.model.Task
 import com.todo.domain.model.wrapper.UIResultWrapper
