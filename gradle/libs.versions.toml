@@ -2,6 +2,7 @@
 agp = "8.3.0"
 animation = "1.6.8"
 converterGson = "2.9.0"
+coreKtxVersion = "1.6.1"
 divkit = "30.9.0"
 hiltAndroid = "2.48"
 kotlin = "1.9.0"
@@ -23,18 +24,25 @@ mockwebserver = "4.9.3"
 okhttp = "4.10.0"
 retrofit2KotlinCoroutinesAdapter = "0.9.2"
 roomKtx = "2.7.0-alpha04"
+runner = "1.6.1"
+rules = "1.6.1"
 serialization = "1.6.3"
 appcompat = "1.7.0"
 ktor = "2.3.7"
 materialVersion = "1.12.0"
 
 [libraries]
-agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp"}
+agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 
+androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
 div-core = { module = "com.yandex.div:div-core", version.ref = "divkit" }
 div = { module = "com.yandex.div:div", version.ref = "divkit" }
 div-json = { module = "com.yandex.div:div-json", version.ref = "divkit" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroid" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoCore" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
@@ -46,7 +54,7 @@ utils = { module = "com.yandex.div:utils", version.ref = "divkit" }
 div-pinch-to-zoom = { module = "com.yandex.div:div-pinch-to-zoom", version.ref = "divkit" }
 
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin"}
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }

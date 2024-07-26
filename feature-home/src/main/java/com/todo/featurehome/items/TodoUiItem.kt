@@ -23,15 +23,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.core.R
+import com.todo.core.theme.AppTheme
 import com.todo.core.util.formatToString
 import com.todo.core.util.millisecondsToLocalDate
-import com.todo.core.theme.AppTheme
 import com.todo.domain.model.Task
 import com.todo.domain.model.TaskImportance
 import java.time.LocalDate

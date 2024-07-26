@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,8 @@ fun NewTaskFloatingButton(
     FloatingActionButton(
         shape = CircleShape,
         modifier = modifier
-            .size(56.dp),
+            .size(56.dp)
+            .testTag("addTaskButton"),
         onClick = {
             if (enabled) {
                 enabled = false
