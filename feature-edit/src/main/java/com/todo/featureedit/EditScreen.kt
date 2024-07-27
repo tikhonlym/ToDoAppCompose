@@ -48,6 +48,8 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -358,6 +360,7 @@ fun EditScreenComponent(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    val description = stringResource(id = R.string.change_importance)
                     ChangeImportanceUiItem(
                         modifier = Modifier
                             .padding(top = 16.dp, bottom = 16.dp)
@@ -366,6 +369,9 @@ fun EditScreenComponent(
                                 scope.launch {
                                     scaffoldState.bottomSheetState.expand()
                                 }
+                            }
+                            .semantics {
+                                contentDescription = description
                             },
                         importance = importanceState
                     )
@@ -415,6 +421,7 @@ private fun EditToolBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val description = stringResource(id = R.string.close_screen)
         Icon(
             modifier = Modifier
                 .size(24.dp)
@@ -425,11 +432,15 @@ private fun EditToolBar(
                 ) {
                     onClose.invoke()
                     onClickEnabled = false
+                }
+                .semantics {
+                    contentDescription = description
                 },
             tint = AppTheme.colorScheme.labelPrimary,
             painter = painterResource(R.drawable.ic_close),
             contentDescription = null,
         )
+        val contentDesc = stringResource(id = R.string.save_task_text)
         Text(
             modifier = Modifier
                 .clickable(
@@ -439,6 +450,9 @@ private fun EditToolBar(
                 ) {
                     onSaveTask.invoke()
                     onClickEnabled = false
+                }
+                .semantics {
+                    contentDescription = contentDesc
                 }
                 .testTag("saveButton"),
             text = stringResource(R.string.btn_save_title),

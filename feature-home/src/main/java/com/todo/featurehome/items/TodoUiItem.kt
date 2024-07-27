@@ -25,6 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +51,13 @@ fun TodoUiItem(
     data: Task,
 ) {
     var completeState by remember { mutableStateOf(data.done) }
+    val todoCheckedDescription =
+        if (data.done) stringResource(R.string.done) else stringResource(R.string.not_done)
+    val todoImportanceState = data.importance
+    val todoStateDescription =
+        stringResource(R.string.todo_state_description, todoCheckedDescription, todoImportanceState)
+    val todoContent = stringResource(R.string.todo_text_description, data.text)
+
     AnimatedVisibility(!(!showCompletedTasks && completeState)) {
         Box(
             modifier
@@ -63,6 +74,10 @@ fun TodoUiItem(
                 ),
         ) {
             Row(
+                modifier = Modifier.semantics(mergeDescendants = true) {
+                    stateDescription = todoStateDescription
+                    contentDescription = todoContent
+                },
                 verticalAlignment = Alignment.Top
             ) {
                 Checkbox(
