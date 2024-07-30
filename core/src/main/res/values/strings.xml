@@ -22,4 +22,16 @@
     <string name="like_in_system">"Как в системе"</string>
     <string name="always_dark">"Всегда тёмная"</string>
     <string name="always_light">"Всегда светлая"</string>
+    <string name="settings">"настройки"</string>
+    <string name="close_completed_tasks">"скрыть выполненные задачи"</string>
+    <string name="show_all_tasks">"показать все задачи"</string>
+    <string name="add_new_task">"добавить новую задачу"</string>
+    <string name="done">"выполнено"</string>
+    <string name="not_done">"не выполнено"</string>
+    <string name="todo_state_description">Состояние: %1$s. Важность: %2$s</string>
+    <string name="todo_text_description">Текст задачи: %1$s</string>
+    <string name="change_importance">Текст задачи: %1$s</string>
+    <string name="delete_task_text">Удалить задачуу</string>
+    <string name="close_screen">вернуться назад</string>
+    <string name="save_task_text">сохранить задачу</string>
 </resources>

@@ -45,22 +45,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.todo.core.R
-import com.todo.core.util.formatToMillis
-import com.todo.core.util.generateUniqueIdForTask
-import com.todo.core.util.getDeviceName
-import com.todo.core.util.millisecondsToLocalDate
 import com.todo.core.theme.AppTheme
 import com.todo.core.theme.component.CircleLoader
 import com.todo.core.theme.component.StrokeStyle
 import com.todo.core.theme.shimmerBackground
+import com.todo.core.util.formatToMillis
+import com.todo.core.util.generateUniqueIdForTask
+import com.todo.core.util.getDeviceName
+import com.todo.core.util.millisecondsToLocalDate
 import com.todo.domain.model.TaskImportance
 import com.todo.featureedit.components.BottomSheetScaffoldContent
 import com.todo.featureedit.components.ChangeImportanceUiItem
@@ -331,7 +334,8 @@ fun EditScreenComponent(
                             .border(
                                 BorderStroke(1.dp, basicTextFieldBackgroundColor),
                                 RoundedCornerShape(8.dp)
-                            ),
+                            )
+                            .testTag("taskDescriptionField"),
                         value = textFieldValue,
                         textStyle = AppTheme.typographyScheme.body
                             .copy(color = AppTheme.colorScheme.labelPrimary),
@@ -356,6 +360,7 @@ fun EditScreenComponent(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    val description = stringResource(id = R.string.change_importance)
                     ChangeImportanceUiItem(
                         modifier = Modifier
                             .padding(top = 16.dp, bottom = 16.dp)
@@ -364,6 +369,9 @@ fun EditScreenComponent(
                                 scope.launch {
                                     scaffoldState.bottomSheetState.expand()
                                 }
+                            }
+                            .semantics {
+                                contentDescription = description
                             },
                         importance = importanceState
                     )
@@ -413,6 +421,7 @@ private fun EditToolBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val description = stringResource(id = R.string.close_screen)
         Icon(
             modifier = Modifier
                 .size(24.dp)
@@ -423,20 +432,29 @@ private fun EditToolBar(
                 ) {
                     onClose.invoke()
                     onClickEnabled = false
+                }
+                .semantics {
+                    contentDescription = description
                 },
             tint = AppTheme.colorScheme.labelPrimary,
             painter = painterResource(R.drawable.ic_close),
             contentDescription = null,
         )
+        val contentDesc = stringResource(id = R.string.save_task_text)
         Text(
-            modifier = Modifier.clickable(
-                enabled = onClickEnabled,
-                interactionSource = null,
-                indication = null
-            ) {
-                onSaveTask.invoke()
-                onClickEnabled = false
-            },
+            modifier = Modifier
+                .clickable(
+                    enabled = onClickEnabled,
+                    interactionSource = null,
+                    indication = null
+                ) {
+                    onSaveTask.invoke()
+                    onClickEnabled = false
+                }
+                .semantics {
+                    contentDescription = contentDesc
+                }
+                .testTag("saveButton"),
             text = stringResource(R.string.btn_save_title),
             color = AppTheme.colorScheme.colorBlue,
             style = AppTheme.typographyScheme.button

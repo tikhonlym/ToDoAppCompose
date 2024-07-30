@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._543a519d4f924bfc205e6a94013256c0.androidTestImplementation
+import gradle.kotlin.dsl.accessors._543a519d4f924bfc205e6a94013256c0.testImplementation
 import org.gradle.kotlin.dsl.dependencies
 
 plugins {
@@ -20,10 +22,14 @@ dependencies {
     // Room
     implementation(libs.androidx.room.ktx)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     testImplementation(libs.junit)
+    androidTestImplementation(libs.mockito.android)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

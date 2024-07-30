@@ -14,6 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.todo.core.R
@@ -24,6 +27,7 @@ fun SyncButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    val description = stringResource(id = R.string.txt_sync_needed)
     Box(
         modifier
             .size(40.dp)
@@ -36,6 +40,9 @@ fun SyncButton(
                 shape = CircleShape
             )
             .clickable { onClick() }
+            .semantics {
+                contentDescription = description
+            }
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_sync),

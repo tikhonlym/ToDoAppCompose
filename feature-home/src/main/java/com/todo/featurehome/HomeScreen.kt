@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -218,7 +219,7 @@ private fun HomeScreenComponent(
         internetWorking = isNetworkAvailable
     )
 
-    LazyColumn(state = listState) {
+    LazyColumn(state = listState, modifier = Modifier.testTag("taskList")) {
         item {
             ExpandedToolbar(
                 onNavigateToSettings = onNavigateToSettings,
@@ -243,7 +244,9 @@ private fun HomeScreenComponent(
                     onNavigateToEditScreen(id)
                     onTaskClickEnabled = false
                 },
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp)
+                    .testTag(curItem.id),
                 enabled = onTaskClickEnabled,
                 showCompletedTasks = showCompleted.value,
                 data = curItem,
@@ -339,7 +342,8 @@ private fun ExpandedToolbar(
             Box(modifier = Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.align(Alignment.CenterEnd)) {
                     SettingsButton(
-                        onNavigateToSettingsScreen = onNavigateToSettings
+                        onNavigateToSettingsScreen = onNavigateToSettings,
+                        modifier = Modifier.testTag("settings")
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                 }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,14 +69,17 @@ fun SettingsScreen(
                 mutableStateOf(viewModel.getThemeMode())
             }
 
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .testTag("themeChangeWindow")) {
                 ThemeSelectionUIItem(
                     onChangeTheme = {
                         viewModel.changeThemeMode(AppThemeMode.SYSTEM)
                         selectedOption.value = viewModel.getThemeMode()
                     },
                     text = stringResource(id = R.string.like_in_system),
-                    checked = selectedOption.value == AppThemeMode.SYSTEM
+                    checked = selectedOption.value == AppThemeMode.SYSTEM,
+                    modifierForCheckBox = Modifier.testTag("system")
                 )
                 ThemeSelectionUIItem(
                     onChangeTheme = {
@@ -83,7 +87,8 @@ fun SettingsScreen(
                         selectedOption.value = viewModel.getThemeMode()
                     },
                     text = stringResource(id = R.string.always_dark),
-                    checked = selectedOption.value == AppThemeMode.ALWAYS_DARK
+                    checked = selectedOption.value == AppThemeMode.ALWAYS_DARK,
+                    modifierForCheckBox = Modifier.testTag("alwaysDark")
                 )
                 ThemeSelectionUIItem(
                     onChangeTheme = {
@@ -91,7 +96,8 @@ fun SettingsScreen(
                         selectedOption.value = viewModel.getThemeMode()
                     },
                     text = stringResource(id = R.string.always_light),
-                    checked = selectedOption.value == AppThemeMode.ALWAYS_LIGHT
+                    checked = selectedOption.value == AppThemeMode.ALWAYS_LIGHT,
+                    modifierForCheckBox = Modifier.testTag("alwaysLight")
                 )
             }
         }
@@ -116,6 +122,7 @@ fun SettingsScreen(
 private fun ThemeSelectionUIItem(
     onChangeTheme: () -> Unit,
     modifier: Modifier = Modifier,
+    modifierForCheckBox: Modifier = Modifier,
     text: String,
     checked: Boolean,
 ) {
@@ -124,6 +131,7 @@ private fun ThemeSelectionUIItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
+            modifier = modifierForCheckBox,
             checked = checked,
             onCheckedChange = {
                 onChangeTheme.invoke()

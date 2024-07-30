@@ -8,6 +8,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import com.todo.core.R
 import com.todo.core.theme.AppTheme
@@ -18,7 +21,11 @@ fun SwitchVisibilityButton(
     modifier: Modifier = Modifier,
     checked: Boolean,
 ) {
-
+    val description =
+        if (checked)
+            stringResource(id = R.string.close_completed_tasks)
+        else
+            stringResource(id = R.string.show_all_tasks)
     Crossfade(
         targetState = checked,
         animationSpec = tween(450)
@@ -27,6 +34,9 @@ fun SwitchVisibilityButton(
             modifier = Modifier
                 .clickable(interactionSource = null, indication = null) {
                     onClick.invoke()
+                }
+                .semantics {
+                    contentDescription = description
                 }
                 .then(modifier),
             painter = painterResource(
